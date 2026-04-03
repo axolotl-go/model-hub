@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_user')->references('id')->on('users')->cascadeOnDelete();
-            $table->foreignId('id_model')->references('id')->on('model3d')->cascadeOnDelete();
+
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('threed_id')->constrained()->cascadeOnDelete();
+
             $table->text('comment');
+
             $table->timestamps();
         });
     }

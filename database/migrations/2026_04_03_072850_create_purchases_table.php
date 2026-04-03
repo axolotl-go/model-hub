@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('model3d_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('threed_id')->constrained()->cascadeOnDelete();
 
             $table->timestamp('purchased_at')->useCurrent();
         });
