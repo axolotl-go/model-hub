@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('purchases', function (Blueprint $table) {
+        Schema::create('model3d', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('description');
+            $table->string('file');
+            $table->decimal('price', 10, 2);
+
+            $table->foreignId('id_category')->constrained('categories')->cascadeOnDelete();
             $table->timestamps();
-
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('model3d_id')->constrained()->cascadeOnDelete();
-
-            $table->timestamp('purchased_at')->useCurrent();
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('purchases');
+        Schema::dropIfExists('model3d');
     }
 };
