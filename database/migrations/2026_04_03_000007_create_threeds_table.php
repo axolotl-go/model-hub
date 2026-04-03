@@ -11,15 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('model3d', function (Blueprint $table) {
+        Schema::create('threeds', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('description');
-            $table->string('file');
-            $table->decimal('price', 10, 2);
 
-            $table->foreignId('id_category')->constrained('categories')->cascadeOnDelete();
+            $table->string('name');
+            $table->text('description');
+            $table->string('file_path');
+            $table->decimal('price', 10, 2)->unsigned();
+
+            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
+
             $table->timestamps();
+
+            $table->index('category_id');
         });
     }
 
@@ -28,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('model3d');
+        Schema::dropIfExists('threeds');
     }
 };
