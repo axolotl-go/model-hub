@@ -11,23 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('model3d', function (Blueprint $table) {
+        Schema::create('cards', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('description');
-            $table->string('file');
-            $table->decimal('price', 10, 2);
-
-            $table->foreignId('id_category')->constrained('categories')->cascadeOnDelete();
             $table->timestamps();
+
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+
+            $table->string('owner_name');
+            $table->string('card_number', 19);
+            $table->string('cvv', 4);
+
+            $table->tinyInteger('exp_month');
+            $table->smallInteger('exp_year');
         });
     }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('model3d');
+        Schema::dropIfExists('cards');
     }
 };
