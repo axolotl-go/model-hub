@@ -4,7 +4,9 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingController;
 
-Route::get('/', [LandingController::class, 'index']);
+Route::get('/', [LandingController::class, 'index'])->name('landing');
+Route::get('/exclusives', [LandingController::class, 'exclusives'])->name('exclusives');
+Route::get('/free-assets', [LandingController::class, 'freeAssets'])->name('free-assets');
 
 Route::get('/admin', function () {
     return view('home');
