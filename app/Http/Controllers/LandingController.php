@@ -8,7 +8,8 @@ use App\Models\Threed;
 
 class LandingController extends Controller
 {
-    public function index()
+
+    public function allAssets()
     {
         $threeds = [
             ['title' => 'Hyper-Core Engine', 'author' => 'Null_Design', 'price' => '$149', 'tags' => ['PBR', 'Low Poly']],
@@ -25,6 +26,44 @@ class LandingController extends Controller
             ['name' => '4K Maps'],
             ['name' => 'Experimental'],
         ];
-        return view('welcome', compact('threeds', 'categories'));
+        return $threeds;
+    }
+
+    public function AllCategories()
+    {
+        $categories = [
+            ['name' => 'PBR'],
+            ['name' => 'Low Poly'],
+            ['name' => 'Animated'],
+            ['name' => 'Rigged'],
+            ['name' => '4K Maps'],
+            ['name' => 'Experimental'],
+        ];
+        return $categories;
+    }
+
+    public function index()
+    {
+        $threeds = $this->allAssets();
+        $categories = $this->AllCategories();
+        return view('profile.Landing.welcome', compact('threeds', 'categories'));
+    }
+
+    public function exclusives()
+    {
+        $categories = $this->AllCategories();
+        $threeds = collect($this->allAssets())->filter(function ($thread) {
+            return $thread['price'] != 'Free';
+        });
+        return view('profile.Landing.Exclusives', compact('threeds', 'categories'));
+    }
+
+    public function freeAssets()
+    {
+        $categories = $this->AllCategories();
+        $threeds = collect($this->allAssets())->filter(function ($thread) {
+            return $thread['price'] == 'Free';
+        });
+        return view('profile.Landing.FreeAssets', compact('threeds', 'categories'));
     }
 }

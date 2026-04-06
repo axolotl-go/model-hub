@@ -2170,18 +2170,14 @@
     <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
         <nav class="fixed top-0 left-0 right-0 w-full z-50 bg-zinc-950/60 backdrop-blur-xl shadow-lg flex justify-between items-center px-8 h-20">
             <div class="flex items-center gap-12">
-                <span class="text-2xl font-bold tracking-tighter text-cyan-400">Kinetic Gallery</span>
+                <x-application-logo />
                 <div class="hidden md:flex items-center gap-8">
-                    <a class="text-cyan-400 border-b-2 border-violet-500 pb-1" href="#">Browse</a>
-                    <a class="text-zinc-400 hover:text-zinc-100 transition-colors" href="#">Exclusives</a>
+                    <a class="@yield('browse')" href="{{ route('landing') }}">Browse</a>
+                    <a class="@yield('exclusives')" href="{{ route('exclusives') }}">Exclusives</a>
+                    <a class="@yield('free-assets')" href="{{ route('free-assets') }}">Free Assets</a>
                 </div>
             </div>
             <div class="flex items-center gap-6">
-                <div class="flex-1 max-w-xl px-12">
-                    <div class="relative group">
-                        <input class="w-full bg-[#000000] border-none rounded-full py-2.5 pl-12 pr-4 text-sm focus:ring-1 focus:ring-[#8ff5ff] placeholder-zinc-600 transition-all text-white" placeholder="Search 3D assets..." type="text" />
-                    </div>
-                </div>
 
                 @if (Route::has('login'))
 
@@ -2215,24 +2211,22 @@
         <main class="pt-32 pb-20 px-8 max-w-[1600px] mx-auto">
             <header class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20">
                 <div class="lg:col-span-5 flex flex-col justify-center">
-                    <h1 class="text-4xl lg:text-7xl font-bold tracking-tighter mb-6 leading-[0.9]">
+                    <h1 class="text-4xl lg:text-7xl text-[#EDEDEC] font-bold tracking-tighter mb-6 leading-[0.9]">
                         Dimensional <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#8ff5ff] to-[#ff5dd7]">Future</span>
                     </h1>
                     <p class="text-zinc-400 text-lg max-w-md mb-8">
                         Discover rare digital sculptures and high-fidelity 3D models curated for the next generation of creative builders.
                     </p>
                     <div class="flex gap-4">
-                        <button class="px-8 py-3 bg-gradient-to-br from-[#8ff5ff] to-[#00eefc] text-[#005d63] font-bold rounded-lg hover:opacity-90 transition-all flex items-center gap-2">
+                        <x-primary-button>
                             <span>Get Started</span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                             </svg>
-
-
-                        </button>
-                        <button class="px-8 py-3 bg-zinc-800/40 border border-[#8ff5ff]/20 text-[#8ff5ff] font-bold rounded-lg hover:bg-zinc-800/60 transition-all">
+                        </x-primary-button>
+                        <x-secondary-button>
                             View Auctions
-                        </button>
+                        </x-secondary-button>
                     </div>
                 </div>
 
@@ -2264,38 +2258,8 @@
                 </div>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-
-                @foreach($threeds as $item)
-                <div class="group bg-[#1f1f23] rounded-2xl overflow-hidden transition-all duration-300 hover:bg-[#25252a]">
-                    <div class="aspect-square relative overflow-hidden bg-zinc-900">
-                        <img alt="Model" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://picsum.photos/seed/{{ $loop->index }}/600/600" />
-                        <div class="absolute top-4 right-4 h-8 w-8 bg-zinc-950/40 backdrop-blur-md rounded-full flex items-center justify-center text-zinc-400 hover:text-[#8ff5ff] transition-colors cursor-pointer">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="p-5">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <h4 class="font-bold text-lg text-zinc-100">{{ $item['title'] }}</h4>
-                                <p class="text-sm text-zinc-500">by <span class="text-zinc-300">{{ $item['author'] }}</span></p>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-[10px] text-zinc-500 uppercase">Price</p>
-                                <p class="font-bold text-[#8ff5ff]">{{ $item['price'] }}</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-2">
-                            @foreach($item['tags'] as $tag)
-                            <span class="text-[10px] px-2 py-1 bg-zinc-800 rounded uppercase text-zinc-400">{{ $tag }}</span>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-                @endforeach
+                @yield('content')
             </div>
-
         </main>
     </div>
 
@@ -2303,5 +2267,36 @@
     <div class="h-14.5 hidden lg:block"></div>
     @endif
 </body>
+<footer class="w-full bg-zinc-950 border-t border-zinc-800/50 py-12 mt-auto">
+    <div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-8">
+
+        <div class="flex flex-col gap-2 text-center md:text-left">
+            <x-application-logo />
+            <p class="text-zinc-500 text-sm lowercase tracking-normal">
+                © {{ date('Y') }} Kinetic Gallery. Built for the 3D generation.
+            </p>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-8 text-[10px] uppercase tracking-[0.2em] font-bold">
+            <a class="text-zinc-500 hover:text-cyan-400 transition-colors duration-300" href="#">Terms of Service</a>
+            <a class="text-zinc-500 hover:text-cyan-400 transition-colors duration-300" href="#">Privacy Policy</a>
+            <a class="text-zinc-500 hover:text-cyan-400 transition-colors duration-300" href="#">Contact</a>
+            <a class="text-zinc-500 hover:text-cyan-400 transition-colors duration-300" href="#">API Docs</a>
+        </div>
+
+        <div class="flex gap-6 items-center">
+            <a class="text-zinc-500 hover:text-white transition-all duration-300 transform hover:scale-110" href="#">
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path>
+                </svg>
+            </a>
+            <a class="text-zinc-500 hover:text-white transition-all duration-300 transform hover:scale-110" href="#">
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.493-1.1-1.1s.493-1.1 1.1-1.1 1.1.493 1.1 1.1-.493 1.1-1.1 1.1zm9 6.891h-2v-3.86c0-2.023-2.422-1.87-2.422 0v3.86h-2v-6h2v1.09c.897-1.662 4.422-1.787 4.422 1.411v3.499z"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
+</footer>
 
 </html>
