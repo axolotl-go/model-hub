@@ -58,14 +58,16 @@
         </a>
     </nav>
     <div class="px-4 mb-6">
-        <button
-            class="w-full py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold rounded-lg flex items-center justify-center gap-2 shadow-lg shadow-primary/10 active:scale-95 transition-transform">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
-            Upload New Model
-        </button>
+        <a href="/admin/upModel">
+            <button
+                class="w-full py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold rounded-lg flex items-center justify-center gap-2 shadow-lg shadow-primary/10 active:scale-95 transition-transform">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+                Upload New Model
+            </button>
+        </a>
     </div>
     <div class="border-t border-zinc-800/50 pt-4">
         <a class="flex items-center gap-3 px-4 py-3 text-zinc-500 hover:text-zinc-200 transition-all" href="#">

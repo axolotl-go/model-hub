@@ -163,6 +163,14 @@
                     </tr>
                 </tbody>
             </table>
+
+            <table
+                class="flex-1 bg-surface-container-low rounded-2xl overflow-hidden shadow-2xl shadow-black/50 border border-outline-variant/5">
+
+                <x-dynamic-table :headers="['Asset', 'Category', 'Price', 'Sales', 'Status', 'Actions']" :rows="[['a', 'b', 'c', 'd', 'e', 'f']]" />
+
+            </table>
+
             <footer class="p-6 bg-surface-container-high/20 flex justify-between items-center">
                 <p class="text-xs font-label text-on-surface-variant uppercase tracking-widest">Showing 3 of 1,248
                     assets</p>
