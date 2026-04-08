@@ -12,22 +12,6 @@
             <div class="w-full h-full object-cover opacity-80 z-10">
                 <x-view-model-three />
             </div>
-            <!-- Viewer Controls (Glassmorphism Overlay) -->
-            <div
-                class="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex gap-4 p-2 bg-surface-variant/60 backdrop-blur-xl rounded-full border border-outline-variant/20">
-                <button class="p-3 bg-primary/20 text-primary rounded-full hover:bg-primary/30 transition-all">
-                    <span class="material-symbols-outlined">view_in_ar</span>
-                </button>
-                <button class="p-3 text-on-surface-variant hover:text-on-surface transition-all">
-                    <span class="material-symbols-outlined">rotate_right</span>
-                </button>
-                <button class="p-3 text-on-surface-variant hover:text-on-surface transition-all">
-                    <span class="material-symbols-outlined">zoom_in</span>
-                </button>
-                <button class="p-3 text-on-surface-variant hover:text-on-surface transition-all">
-                    <span class="material-symbols-outlined">fullscreen</span>
-                </button>
-            </div>
         </section>
         <!-- Content Grid -->
         <div class="max-w-7xl mx-auto px-8 py-16 grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -169,24 +153,6 @@
                                 <span>Free Lifetime Updates</span>
                             </div>
                         </div>
-                    </div>
-                    <!-- Creator Info -->
-                    <div class="bg-surface-container p-6 rounded-2xl flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-primary to-secondary p-[2px]">
-                            <div
-                                class="w-full h-full rounded-full bg-surface-container flex items-center justify-center overflow-hidden">
-                                <img class="w-full h-full object-cover"
-                                    data-alt="Portrait of a digital artist, close up, creative lighting with blue tones"
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCR_r1GSkgM35LHf_Tl7Osd1UYzpbLQTGIprfQCAxo_0LQQgAE917i57zHoP4rEkj51swbsbefJyeGYJWttfaPX06uhDwqGqS91L9MsEPJyZ6OLu1maPqlDszUhuvGtMqPzVoNmfJemcnPJmKyloz-OW-dPpNyuEbeHskzSCHu2o4T0qE3Ju5AZ_TbAvsPjVPDZ0UgqB9NMzFZuPWeCGXdEryRzoA09RQFInVIz0NgfC7Ben9jZKss0UMxEWY2d5fYONC5HAkgBr9s" />
-                            </div>
-                        </div>
-                        <div>
-                            <span class="block text-outline text-[10px] font-label uppercase tracking-widest">Created
-                                By</span>
-                            <span class="text-on-surface font-headline font-bold">Xenon_Studio</span>
-                        </div>
-                        <button
-                            class="ml-auto text-primary text-sm font-label font-bold hover:underline">Follow</button>
                     </div>
                 </div>
             </aside>

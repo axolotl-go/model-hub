@@ -10,7 +10,8 @@ Route::get('/free-assets', [LandingController::class, 'freeAssets'])->name('free
 
 Route::get('/admin', function () {
     return view('admin.dashboard');
-})->middleware(['auth', 'verified'])->name('admin');
+})->middleware('auth','role:admin');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
