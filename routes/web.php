@@ -12,12 +12,18 @@ Route::get('/free-assets', [LandingController::class, 'freeAssets'])->name('free
 Route::get('/cart', [StoreCartController::class, 'index'])->middleware(['auth'])->name('cart');
 
 Route::get('/admin', function () {
-    return view('home');
-})->middleware(['auth', 'verified'])->name('admin');
+    return view('admin.dashboard');
+})->middleware('auth','role:admin');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/detalleModelo', function() {
+    return view('detalleModelo.detalleModelo');
+})->middleware(['auth', 'verified'])->name('detalleModelo');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
