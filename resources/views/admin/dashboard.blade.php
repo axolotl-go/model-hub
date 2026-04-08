@@ -1,3 +1,4 @@
 <x-admin-layout>
-    Hello world
+    Putos
+
 </x-admin-layout>

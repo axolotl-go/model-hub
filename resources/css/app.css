@@ -4,4 +4,5 @@
 
 body {
     color: white;
+    background: rgb(17 24 39 / var(--tw-bg-opacity, 1));
 }

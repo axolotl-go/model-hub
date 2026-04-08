@@ -9,12 +9,17 @@ Route::get('/exclusives', [LandingController::class, 'exclusives'])->name('exclu
 Route::get('/free-assets', [LandingController::class, 'freeAssets'])->name('free-assets');
 
 Route::get('/admin', function () {
-    return view('home');
+    return view('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('admin');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/detalleModelo', function() {
+    return view('detalleModelo.detalleModelo');
+})->middleware(['auth', 'verified'])->name('detalleModelo');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
