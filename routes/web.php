@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ModelController;
 use App\Http\Controllers\StoreCartController;
+use App\Http\Controllers\UpModelController;
 use App\Http\Controllers\UserController;
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
@@ -26,6 +27,8 @@ Route::middleware(['auth', 'role:admin'])
         Route::resource('users', UserController::class)->only(['index']);
 
         Route::resource('models', ModelController::class)->only(['index']);
+        
+        Route::resource('upModel', UpModelController::class)->only(['index']);
 
         Route::resource('sales', SalesController::class)->only(['index']);
     });
