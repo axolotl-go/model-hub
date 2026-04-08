@@ -17,11 +17,10 @@ class RoleValid
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        // Caso simple: columna 'role'
+        // redireccionar a home en caso de que rol sea usuario
         if (!in_array($user->role, $roles)) {
             return redirect('/');
         };
-
 
         return $next($request);
     }

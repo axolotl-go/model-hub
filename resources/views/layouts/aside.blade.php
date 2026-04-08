@@ -16,7 +16,7 @@
         </a>
         <!-- Active State: Manage Models -->
         <a class="flex items-center gap-3 px-4 py-3 bg-zinc-800 text-cyan-400 border-l-4 border-violet-500 transition-all duration-200 ease-in-out"
-            href="/admin/Models">
+            href="/admin/models">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -27,7 +27,7 @@
 
         </a>
         <a class="flex items-center gap-3 px-4 py-3 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/80 transition-all duration-200 ease-in-out"
-            href="/admin/Users">
+            href="/admin/users">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -37,7 +37,7 @@
             <span>User Directory</span>
         </a>
         <a class="flex items-center gap-3 px-4 py-3 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/80 transition-all duration-200 ease-in-out"
-            href="/admin/Sales">
+            href="/admin/sales">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -46,7 +46,7 @@
             <span>Sales Data</span>
         </a>
         <a class="flex items-center gap-3 px-4 py-3 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/80 transition-all duration-200 ease-in-out"
-            href="/admin/Settings">
+            href="/admin/settings">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
