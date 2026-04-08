@@ -10,4 +10,10 @@ class UserController extends Controller
         return view('admin.users');
     }
 
+    public function create() {
+        
+
+        return view('admin.users');
+    }
+
 }
