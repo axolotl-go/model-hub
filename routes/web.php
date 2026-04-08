@@ -3,10 +3,13 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\StoreCartController;
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 Route::get('/exclusives', [LandingController::class, 'exclusives'])->name('exclusives');
 Route::get('/free-assets', [LandingController::class, 'freeAssets'])->name('free-assets');
+
+Route::get('/cart', [StoreCartController::class, 'index'])->middleware(['auth'])->name('cart');
 
 Route::get('/admin', function () {
     return view('admin.dashboard');
