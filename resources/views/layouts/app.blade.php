@@ -22,7 +22,7 @@
 
         <!-- Page Heading -->
         @isset($header)
-        <header class="bg-zinc-900 border-b border-zinc-800/50">
+        <header class="bg-zinc-900 border-b border-zinc-800/50 mb-4">
             <div class="px-6 py-5 flex items-center justify-between gap-4">
                 {{ $header }}
             </div>
@@ -30,10 +30,13 @@
         @endisset
 
         <!-- Page Content -->
-        <main class="flex flex-1 overflow-hidden">
-            {{ $slot }}
+        <main>
+            <div class="flex-1 overflow-y-auto bg-zinc-950 px-8 py-8">
+                {{ $slot }}
+            </div>
         </main>
     </div>
 </body>
+<x-footer />
 
 </html>

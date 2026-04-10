@@ -1,3 +1,4 @@
 <x-admin-layout>
-    Hello world
+    <h1>you are admin</h1>
+
 </x-admin-layout>
