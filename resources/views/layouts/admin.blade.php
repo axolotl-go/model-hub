@@ -47,6 +47,12 @@
 
         </div>
     </div>
+
+
+    <script>
+        @yield('scripts')
+    </script>
+
 </body>
 
 </html>

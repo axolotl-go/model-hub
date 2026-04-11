@@ -13,17 +13,12 @@ return new class extends Migration
     {
         Schema::create('threeds', function (Blueprint $table) {
             $table->id();
-
             $table->string('name');
             $table->text('description');
             $table->string('file_path');
-            $table->decimal('price', 10, 2)->unsigned();
-
+            $table->decimal('price', 10, 2);
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
-
             $table->timestamps();
-
-            $table->index('category_id');
         });
     }
 

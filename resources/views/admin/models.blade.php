@@ -1,4 +1,9 @@
 <x-admin-layout>
+
+    @section('scripts')
+
+    @endsection
+
     <main class="p-12 min-h-screen flex flex-col">
         <!-- Header Section -->
         <header class="flex justify-between items-end mb-12">
