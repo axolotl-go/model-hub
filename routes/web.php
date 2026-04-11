@@ -1,10 +1,14 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SalesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\ModelController;
 use App\Http\Controllers\StoreCartController;
-use App\Http\Controllers\ThreedController;
+use App\Http\Controllers\UpModelController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 Route::get('/exclusives', [LandingController::class, 'exclusives'])->name('exclusives');
@@ -14,15 +18,26 @@ Route::get('/cart', [StoreCartController::class, 'index'])->middleware(['auth'])
 Route::post('/cart', [StoreCartController::class, 'remove'])->name('remove.item');
 Route::post('/cart', [StoreCartController::class, 'removeAll'])->name('remove.all');
 
-Route::get('/admin', function () {
-    return view('home');
-})->middleware(['auth', 'verified'])->name('admin');
 
-route::get('/threed/{id?}', [ThreedController::class, 'index'])->middleware(['auth'])->name('threed');
+Route::middleware(['auth', 'role:admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
 
-Route::get('/dashboard', [ProfileController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/MyModels', [ProfileController::class, 'MyModels'])->middleware(['auth', 'verified'])->name('MyModels');
+        Route::resource('/', AdminController::class)->only('index');
 
+        Route::resource('users', UserController::class)->only(['index']);
+
+        Route::resource('models', ModelController::class)->only(['index']);
+
+        Route::resource('upModel', UpModelController::class)->only(['index']);
+
+        Route::resource('sales', SalesController::class)->only(['index']);
+    });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

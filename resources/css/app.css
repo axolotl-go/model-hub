@@ -4,4 +4,22 @@
 
 body {
     color: white;
+    background: rgb(17 24 39 / var(--tw-bg-opacity, 1));
+}
+.material-symbols-outlined {
+    font-variation-settings:
+        "FILL" 0,
+        "wght" 400,
+        "GRAD" 0,
+        "opsz" 24;
+}
+::-webkit-scrollbar {
+    width: 4px;
+}
+::-webkit-scrollbar-track {
+    background: #0e0e11;
+}
+::-webkit-scrollbar-thumb {
+    background: #25252a;
+    border-radius: 10px;
 }

@@ -11,6 +11,16 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -22,7 +32,7 @@
 
         <!-- Page Heading -->
         @isset($header)
-        <header class="bg-zinc-900 border-b border-zinc-800/50 mb-4">
+        <header class="bg-zinc-900 border-b border-zinc-800/50">
             <div class="px-6 py-5 flex items-center justify-between gap-4">
                 {{ $header }}
             </div>
@@ -30,10 +40,8 @@
         @endisset
 
         <!-- Page Content -->
-        <main>
-            <div class="flex-1 overflow-y-auto bg-zinc-950 px-8 py-8">
-                {{ $slot }}
-            </div>
+        <main class="flex flex-1 overflow-hidden">
+            {{ $slot }}
         </main>
     </div>
 </body>
