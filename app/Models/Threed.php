@@ -7,14 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Threed extends Model
 {
-    use HasFactory;
-
+  
+  use HasFactory;
+  
     protected $fillable = [
         'name',
         'description',
-        'file_path',
         'price',
-        'category_id'
+        'category',
+        'tags',
+        'file_path',
+        'preview_image',
+        'user_id',
     ];
 
     public function category() {

@@ -15,6 +15,8 @@ Route::get('/exclusives', [LandingController::class, 'exclusives'])->name('exclu
 Route::get('/free-assets', [LandingController::class, 'freeAssets'])->name('free-assets');
 
 Route::get('/cart', [StoreCartController::class, 'index'])->middleware(['auth'])->name('cart');
+Route::post('/cart', [StoreCartController::class, 'remove'])->name('remove.item');
+Route::post('/cart', [StoreCartController::class, 'removeAll'])->name('remove.all');
 
 
 Route::middleware(['auth', 'role:admin'])
@@ -27,7 +29,7 @@ Route::middleware(['auth', 'role:admin'])
         Route::resource('users', UserController::class)->only(['index']);
 
         Route::resource('models', ModelController::class)->only(['index']);
-        
+
         Route::resource('upModel', UpModelController::class)->only(['index']);
 
         Route::resource('sales', SalesController::class)->only(['index']);
@@ -36,11 +38,6 @@ Route::middleware(['auth', 'role:admin'])
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/detalleModelo', function() {
-    return view('detalleModelo.detalleModelo');
-})->middleware(['auth', 'verified'])->name('detalleModelo');
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

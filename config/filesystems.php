@@ -46,6 +46,13 @@ return [
             'throw' => false,
             'report' => false,
         ],
+      
+        'threeds' => [
+             'driver' => 'local',
+             'root' => storage_path('app/public/threeds'),
+             'url' => rtrim(env('APP_URL', 'http://localhost'), '/') . '/storage/threeds',
+             'visibility' => 'public',
+         ],
 
         's3' => [
             'driver' => 's3',
@@ -75,6 +82,7 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+        public_path('threeds') => storage_path('app/threeds'),
     ],
 
 ];

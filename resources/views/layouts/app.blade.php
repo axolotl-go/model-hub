@@ -32,18 +32,19 @@
 
         <!-- Page Heading -->
         @isset($header)
-            <header class="bg-white dark:bg-gray-800 shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
+        <header class="bg-zinc-900 border-b border-zinc-800/50">
+            <div class="px-6 py-5 flex items-center justify-between gap-4">
+                {{ $header }}
+            </div>
+        </header>
         @endisset
 
         <!-- Page Content -->
-        <main class="">
+        <main class="flex flex-1 overflow-hidden">
             {{ $slot }}
         </main>
     </div>
 </body>
+<x-footer />
 
 </html>
