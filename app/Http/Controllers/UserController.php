@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class UserController extends Controller
 {
@@ -10,10 +13,8 @@ class UserController extends Controller
         return view('admin.users');
     }
 
-    public function create() {
+    public function store(Request $request) {
         
-
-        return view('admin.users');
     }
 
 }

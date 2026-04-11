@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Threed extends Model
 {
+  
+  use HasFactory;
+  
     protected $fillable = [
         'name',
         'description',
@@ -16,4 +20,8 @@ class Threed extends Model
         'preview_image',
         'user_id',
     ];
+
+    public function category() {
+        return $this->belongsTo(Category::class);
+    }
 }
