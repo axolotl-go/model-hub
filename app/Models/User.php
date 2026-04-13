@@ -29,4 +29,34 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class);
+    }
+
+    public function cartItems()
+    {
+        return $this->hasMany(StoreCart::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function threedModels()
+    {
+        return $this->hasMany(Threed::class);
+    }
+
+    public function getPurchasedModels()
+    {
+        return $this->purchases()->with('threed')->get();
+    }
+
+    public function getCartItems()
+{
+    return $this->hasMany(StoreCart::class)->with('threed')->get();
+}
 }

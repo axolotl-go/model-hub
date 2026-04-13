@@ -16,8 +16,11 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('file_path');
+            $table->string('preview_image')->nullable();
             $table->decimal('price', 10, 2);
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('tags')->nullable();
             $table->timestamps();
         });
     }

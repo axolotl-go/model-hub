@@ -3,37 +3,75 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\StoreCart;
+use App\Models\Threed;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StoreCartController extends Controller
 {
     public function index()
     {
-        $cartItems = [
-            ['name' => 'Hyper-Core Engine', 'description' => 'A high-quality 3D model of a futuristic engine.', 'tag' => 'PBR', 'color' => 'text-cyan-400', 'price' => 149, 'img' => 'https://picsum.photos/id/10/200/200'],
-            ['name' => 'Void Strider v2', 'description' => 'A high-quality 3D model of a futuristic engine.', 'tag' => 'Animated', 'color' => 'text-violet-400', 'price' => 85, 'img' => 'https://picsum.photos/id/20/200/200'],
-            ['name' => 'Ethereal Flux 01', 'description' => 'A high-quality 3D model of a futuristic engine.', 'tag' => 'Experimental', 'color' => 'text-pink-400', 'price' => 0, 'img' => 'https://picsum.photos/id/30/200/200'],
-        ];
-        $subtotal = array_sum(array_column($cartItems, 'price'));
-        $discount = 20;
+        $user = Auth::user();
+        $cartItems = $user->getCartItems();
+
+        $cartItemsFormatted = $cartItems->map(function ($item) {
+            return [
+                'cart_id' => $item->id,
+                'id' => $item->threed->id,
+                'name' => $item->threed->name,
+                'description' => $item->threed->description,
+                'tag' => $item->threed->tags,
+                'color' => 'text-cyan-400',
+                'price' => $item->threed->price,
+                'img' => $item->threed->preview_image ?? 'https://picsum.photos/id/10/200/200',
+            ];
+        })->toArray();
+
+        $subtotal = array_sum(array_column($cartItemsFormatted, 'price'));
+        $discount = $subtotal > 0 ? round($subtotal * 0.05, 2) : 0; // 5% discount
         $total = $subtotal - $discount;
 
-        return view('StoreCart', compact('cartItems', 'subtotal', 'discount', 'total'));
+        return view('StoreCart', [
+            'cartItems' => collect($cartItemsFormatted),
+            'subtotal' => $subtotal,
+            'discount' => $discount,
+            'total' => $total,
+        ]);
     }
 
-    public function remove(Request $request)
+    public function add(Threed $model)
     {
-        $cartItems = session('cart', []);
-        $cartItems = array_filter($cartItems, fn($item) => $item['id'] !== $request->id);
-        session(['cart' => $cartItems]);
+        $user = Auth::user();
+
+        $exists = StoreCart::where('user_id', $user->id)
+            ->where('threed_id', $model->id)
+            ->exists();
+
+        if (!$exists) {
+            StoreCart::create([
+                'user_id' => $user->id,
+                'threed_id' => $model->id,
+            ]);
+        }
+
+        return back()->with('success', $model->name . ' added to cart');
+    }
+
+    public function remove($cartItemId)
+    {
+        $user = Auth::user();
+        StoreCart::where('id', $cartItemId)
+            ->where('user_id', $user->id)
+            ->delete();
+
         return redirect()->route('cart')->with('success', 'Item removed from cart');
     }
 
-    public function removeAll(Request $request)
+    public function removeAll()
     {
-        $cartItems = session('cart', []);
-        $cartItems = [];
-        session(['cart' => $cartItems]);
-        return redirect()->route('cart')->with('success', 'All items removed from cart');
+        $user = Auth::user();
+        StoreCart::where('user_id', $user->id)->delete();
+        return redirect()->route('cart')->with('success', 'Cart cleared');
     }
 }
