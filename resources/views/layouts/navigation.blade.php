@@ -4,8 +4,8 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                <div class="flex items-center">
-                    <a href="{{ route('landing') }}">
+                <div>
+                    <a href="{{ route('kinetic-gallery') }}">
                         <x-application-logo />
                     </a>
                 </div>

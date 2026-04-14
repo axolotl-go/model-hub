@@ -1,20 +1,21 @@
 <x-app-layout>
-    <div class="flex items-center justify-between">
-        <div>
-            <h2 class="text-2xl font-bold tracking-tight text-white">Store Cart</h2>
-            <p class="text-zinc-500 mt-1 text-sm">Review your selected 3D assets before checkout.</p>
+    <div class="flex-1 overflow-y-auto bg-zinc-950 px-8 py-8">
+        <div class="flex items-center justify-between">
+            <div>
+                <h2 class="text-2xl font-bold tracking-tight text-white">Store Cart</h2>
+                <p class="text-zinc-500 mt-1 text-sm">Review your selected 3D assets before checkout.</p>
+            </div>
+            <a href="{{ route('landing') }}"
+                class="flex items-center gap-2 text-xs font-bold text-zinc-400 hover:text-cyan-400 transition-colors uppercase tracking-widest">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                </svg>
+                Continue Shopping
+            </a>
         </div>
-        <a href="{{ route('landing') }}"
-            class="flex items-center gap-2 text-xs font-bold text-zinc-400 hover:text-cyan-400 transition-colors uppercase tracking-widest">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="size-4">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-            </svg>
-            Continue Shopping
-        </a>
-    </div>
-    <div class="max-w-6xl mx-auto mt-4">
-        @if(count($cartItems) === 0)
+        <div class="max-w-6xl mx-auto mt-4">
+            @if(count($cartItems) === 0)
             {{-- Empty state --}}
             <div class="flex flex-col items-center justify-center py-32 text-center">
                 <div class="w-20 h-20 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mb-6">
@@ -31,7 +32,7 @@
                     Browse Assets
                 </a>
             </div>
-        @else
+            @else
 
             <div class="flex flex-col lg:flex-row gap-8 items-start">
 
@@ -51,48 +52,48 @@
                     </div>
 
                     @foreach($cartItems as $item)
-                        <div
-                            class="group flex items-center gap-5 bg-zinc-900 border border-zinc-800/60 hover:border-zinc-700 rounded-2xl p-4 transition-all duration-200">
-                            {{-- Thumbnail --}}
-                            <div class="relative w-20 h-20 rounded-xl overflow-hidden bg-zinc-800 shrink-0">
-                                <img src="{{ $item['img'] }}"
-                                    class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-                            </div>
-
-                            {{-- Info --}}
-                            <div class="flex-1 min-w-0">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <span
-                                        class="text-[9px] font-bold uppercase tracking-wider {{ $item['color'] }} bg-zinc-800 px-2 py-0.5 rounded-full border border-white/5">
-                                        {{ $item['tag'] }}
-                                    </span>
-                                </div>
-                                <h4 class="text-sm font-bold text-white truncate">{{ $item['name'] }}</h4>
-                                <p class="text-[10px] text-zinc-500 mt-0.5">{{ $item['description'] }}</p>
-                            </div>
-
-                            {{-- Price --}}
-                            <div class="shrink-0 text-right">
-                                @if($item['price'] === 0)
-                                    <span class="text-emerald-400 font-bold text-sm">Free</span>
-                                @else
-                                    <span class="text-white font-bold text-sm">${{ $item['price'] }}</span>
-                                @endif
-                            </div>
-
-                            {{-- Remove --}}
-                            <form action="{{ route('cart.remove', $item['id']) }}" method="POST" class="shrink-0">
-                                @csrf
-                                <button type="submit"
-                                    class="w-8 h-8 rounded-lg bg-zinc-800 hover:bg-red-950 hover:text-red-400 text-zinc-500 flex items-center justify-center transition-all duration-200">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                        stroke="currentColor" class="size-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                                    </svg>
-                                </button>
-                            </form>
+                    <div
+                        class="group flex items-center gap-5 bg-zinc-900 border border-zinc-800/60 hover:border-zinc-700 rounded-2xl p-4 transition-all duration-200">
+                        {{-- Thumbnail --}}
+                        <div class="relative w-20 h-20 rounded-xl overflow-hidden bg-zinc-800 shrink-0">
+                            <img src="{{ $item['img'] }}"
+                                class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                         </div>
+
+                        {{-- Info --}}
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span
+                                    class="text-[9px] font-bold uppercase tracking-wider {{ $item['color'] }} bg-zinc-800 px-2 py-0.5 rounded-full border border-white/5">
+                                    {{ $item['tag'] }}
+                                </span>
+                            </div>
+                            <h4 class="text-sm font-bold text-white truncate">{{ $item['name'] }}</h4>
+                            <p class="text-[10px] text-zinc-500 mt-0.5">{{ $item['description'] }}</p>
+                        </div>
+
+                        {{-- Price --}}
+                        <div class="shrink-0 text-right">
+                            @if($item['price'] === 0)
+                            <span class="text-emerald-400 font-bold text-sm">Free</span>
+                            @else
+                            <span class="text-white font-bold text-sm">${{ $item['price'] }}</span>
+                            @endif
+                        </div>
+
+                        {{-- Remove --}}
+                        <form action="{{ route('cart.remove', $item['id']) }}" method="POST" class="shrink-0">
+                            @csrf
+                            <button type="submit"
+                                class="w-8 h-8 rounded-lg bg-zinc-800 hover:bg-red-950 hover:text-red-400 text-zinc-500 flex items-center justify-center transition-all duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" class="size-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
                     @endforeach
                 </div>
 
@@ -104,12 +105,12 @@
                     {{-- Line items --}}
                     <div class="space-y-3">
                         @foreach($cartItems as $item)
-                            <div class="flex justify-between text-sm">
-                                <span class="text-zinc-400 truncate max-w-[60%]">{{ $item['name'] }}</span>
-                                <span class="text-zinc-300 font-medium">
-                                    {{ $item['price'] === 0 ? 'Free' : '$' . $item['price'] }}
-                                </span>
-                            </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-zinc-400 truncate max-w-[60%]">{{ $item['name'] }}</span>
+                            <span class="text-zinc-300 font-medium">
+                                {{ $item['price'] === 0 ? 'Free' : '$' . $item['price'] }}
+                            </span>
+                        </div>
                         @endforeach
                     </div>
 
@@ -152,7 +153,8 @@
                 </div>
 
             </div>
-        @endif
+            @endif
 
+        </div>
     </div>
 </x-app-layout>

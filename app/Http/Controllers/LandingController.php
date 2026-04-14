@@ -21,7 +21,7 @@ class LandingController extends Controller
         return $categories;
     }
 
-    public function index()
+    public function kineticGallery()
     {
         $Browse = 'text-cyan-400 border-b-2 border-violet-500 pb-1';
         $Exclusives = 'text-zinc-400 hover:text-zinc-100 transition-colors';
@@ -30,6 +30,15 @@ class LandingController extends Controller
         $threeds = Threed::latest()->take(12)->get();
         $categories = $this->AllCategories();
         return view('Landing.welcome', compact('threeds', 'categories', 'Browse', 'Exclusives', 'FreeAssets'));
+    }
+
+    public function index()
+    {
+        $Browse = 'text-zinc-400 hover:text-zinc-100 transition-colors';
+        $Exclusives = 'text-zinc-400 hover:text-zinc-100 transition-colors';
+        $FreeAssets = 'text-zinc-400 hover:text-zinc-100 transition-colors';
+
+        return view('Landing.Landing', compact('Browse', 'Exclusives', 'FreeAssets'));
     }
 
 

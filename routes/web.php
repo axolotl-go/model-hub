@@ -17,9 +17,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ModelUserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [LandingController::class, 'index'])->name('landing');
+Route::get('/', [LandingController::class, 'index'])->name('kinetic-gallery');
 Route::get('/exclusives', [LandingController::class, 'exclusives'])->name('exclusives');
 Route::get('/free-assets', [LandingController::class, 'freeAssets'])->name('free-assets');
+Route::get('/Kinetic-Gallery', [LandingController::class, 'kineticGallery'])->name('landing');
+
 
 // Carrito rutas
 Route::get('/cart', [StoreCartController::class, 'index'])->middleware(['auth'])->name('cart');
@@ -29,18 +31,11 @@ Route::post('/cart/remove-all', [StoreCartController::class, 'removeAll'])->midd
 
 // Modelos 3D - rutas usuario autenticado
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/models', [ModelUserController::class, 'index'])
-    ->name('models.index');
-
-Route::get('/models/{threed}', [ModelUserController::class, 'show'])
-    ->name('models.show');    
-
-
+    Route::get('/models', [ModelUserController::class, 'index'])->name('models.index');
+    Route::get('/models/{threed}', [ModelUserController::class, 'show'])->name('models.show');
     Route::post('/models/{threed}/comment', [CommentController::class, 'store'])->name('comments.store');
     Route::get('/my-models', [PurchaseController::class, 'myModels'])->name('purchases.my-models');
     Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
-
-    
 });
 
 // Admin routes

@@ -2171,7 +2171,9 @@
     <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
         <nav class="fixed top-0 left-0 right-0 w-full z-50 bg-zinc-950/60 backdrop-blur-xl shadow-lg flex justify-between items-center px-8 h-20">
             <div class="flex items-center gap-12">
-                <x-application-logo />
+                <a href="{{ route('kinetic-gallery') }}">
+                    <x-application-logo />
+                </a>
                 <div class="hidden md:flex items-center gap-8">
                     <a class="{{$Browse}}" href="{{ route('landing') }}">Browse</a>
                     <a class="{{$Exclusives}}" href="{{ route('exclusives') }}">Exclusives</a>
@@ -2227,43 +2229,27 @@
                                 </svg>
                             </a>
                         </x-primary-button>
-                        <x-secondary-button>
-                            View Auctions
-                        </x-secondary-button>
                     </div>
                 </div>
 
                 <div class="lg:col-span-7 h-[400px] rounded-2xl overflow-hidden relative group">
                     <img alt="Featured model" class="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700" src="https://images.unsplash.com/photo-1633167606207-d840b5070fc2?auto=format&fit=crop&q=80&w=1000" />
-                    <div class="absolute bottom-6 left-6 p-6 bg-zinc-950/80 backdrop-blur-md rounded-xl border border-zinc-800">
-                        <p class="text-[10px] text-[#ff5dd7] uppercase tracking-widest mb-1">Featured drop</p>
-                        <h3 class="text-xl font-bold">Cyber-Sentinel V.04</h3>
-                        <div class="flex items-center gap-4 mt-4">
-                            <div>
-                                <p class="text-[10px] text-zinc-500 uppercase">Current Bid</p>
-                                <p class="font-bold text-[#8ff5ff]">2.45 ETH</p>
-                            </div>
-                            <div class="h-8 w-[1px] bg-zinc-800"></div>
-                            <div>
-                                <p class="text-[10px] text-zinc-500 uppercase">Ends In</p>
-                                <p class="font-bold">12:44:02</p>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
-            </header>
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
-                <div class="flex gap-2 p-1 bg-[#131316] rounded-xl">
-                    <button class="px-6 py-2 bg-[#7000ff] text-white rounded-lg font-bold text-sm">All Assets</button>
-                    @foreach($categories as $category)
-                    <button class="px-6 py-2 text-zinc-500 hover:text-zinc-200 rounded-lg font-bold text-sm transition-colors">{{ $category['name'] }}</button>
-                    @endforeach
-                </div>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                @yield('content')
-            </div>
-        </main>
+    </div>
+    </header>
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
+        <div class="flex gap-2 p-1 bg-[#131316] rounded-xl">
+            <button class="px-6 py-2 bg-[#7000ff] text-white rounded-lg font-bold text-sm">All Assets</button>
+            @foreach($categories as $category)
+            <button class="px-6 py-2 text-zinc-500 hover:text-zinc-200 rounded-lg font-bold text-sm transition-colors">{{ $category['name'] }}</button>
+            @endforeach
+        </div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        @yield('content')
+    </div>
+    </main>
     </div>
 
     @if (Route::has('login'))
