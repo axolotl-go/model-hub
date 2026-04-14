@@ -14,17 +14,20 @@ class PurchaseController extends Controller
 
         $purchasedModels = $purchases->map(function ($purchase) {
             $model = $purchase->threed;
+            $img = $model->preview_image
+                ? asset('storage/' . $model->preview_image)
+                : 'https://picsum.photos/seed/' . $model->id . '/400/300';
             return [
-                'id' => $model->id,
-                'name' => $model->name,
+                'id'          => $model->id,
+                'name'        => $model->name,
                 'description' => $model->description,
-                'img' => $model->preview_image ?? 'https://picsum.photos/id/10/400/300',
-                'tag' => $model->tags,
-                'color' => 'text-cyan-400',
-                'date' => $purchase->purchased_at->format('M d, Y'),
-                'size' => '245 MB',
-                'format' => 'FBX, OBJ, STL',
-                'file_path' => $model->file_path,
+                'img'         => $img,
+                'tag'         => $model->tags,
+                'color'       => 'text-cyan-400',
+                'date'        => $purchase->purchased_at->format('M d, Y'),
+                'size'        => '—',
+                'format'      => strtoupper(pathinfo($model->file_path, PATHINFO_EXTENSION)),
+                'file_path'   => $model->file_path,
             ];
         })->toArray();
 

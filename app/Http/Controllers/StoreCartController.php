@@ -16,27 +16,34 @@ class StoreCartController extends Controller
         $cartItems = $user->getCartItems();
 
         $cartItemsFormatted = $cartItems->map(function ($item) {
+            $img = $item->threed->preview_image
+                ? asset('storage/' . $item->threed->preview_image)
+                : 'https://picsum.photos/seed/' . $item->threed->id . '/200/200';
+
             return [
-                'cart_id' => $item->id,
-                'id' => $item->threed->id,
-                'name' => $item->threed->name,
+                'cart_id'     => $item->id,
+                'id'          => $item->threed->id,
+                'name'        => $item->threed->name,
                 'description' => $item->threed->description,
-                'tag' => $item->threed->tags,
-                'color' => 'text-cyan-400',
-                'price' => $item->threed->price,
-                'img' => $item->threed->preview_image ?? 'https://picsum.photos/id/10/200/200',
+                'tag'         => $item->threed->tags,
+                'color'       => 'text-cyan-400',
+                'price'       => $item->threed->price,
+                'img'         => $img,
             ];
         })->toArray();
 
         $subtotal = array_sum(array_column($cartItemsFormatted, 'price'));
         $discount = $subtotal > 0 ? round($subtotal * 0.05, 2) : 0; // 5% discount
-        $total = $subtotal - $discount;
+        $total    = $subtotal - $discount;
+
+        $cards = $user->cards()->latest()->get();
 
         return view('StoreCart', [
             'cartItems' => collect($cartItemsFormatted),
-            'subtotal' => $subtotal,
-            'discount' => $discount,
-            'total' => $total,
+            'subtotal'  => $subtotal,
+            'discount'  => $discount,
+            'total'     => $total,
+            'cards'     => $cards,
         ]);
     }
 

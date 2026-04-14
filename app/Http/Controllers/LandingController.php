@@ -5,19 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Threed;
+use App\Models\Category;
 
 class LandingController extends Controller
 {
     public function AllCategories()
     {
-        $categories = [
-            ['name' => 'PBR'],
-            ['name' => 'Low Poly'],
-            ['name' => 'Animated'],
-            ['name' => 'Rigged'],
-            ['name' => '4K Maps'],
-            ['name' => 'Experimental'],
-        ];
+        $categories = Category::all();
         return $categories;
     }
 
@@ -48,6 +42,7 @@ class LandingController extends Controller
         $Exclusives = 'text-zinc-400 hover:text-zinc-100 transition-colors';
         $FreeAssets = 'text-cyan-400 border-b-2 border-violet-500 pb-1';
 
+        $threeds = Threed::where('price', 0)->latest()->take(12)->get();
         $categories = $this->AllCategories();
         return view('Landing.welcome', compact('threeds', 'categories', 'Browse', 'Exclusives', 'FreeAssets'));
     }
