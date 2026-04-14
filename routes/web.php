@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminPurchaseController;
+use App\Http\Controllers\CardController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CommentController;
@@ -29,6 +30,13 @@ Route::post('/cart/add/{model}', [StoreCartController::class, 'add'])->middlewar
 Route::post('/cart/remove/{id}', [StoreCartController::class, 'remove'])->middleware(['auth'])->name('cart.remove');
 Route::post('/cart/remove-all', [StoreCartController::class, 'removeAll'])->middleware(['auth'])->name('cart.remove-all');
 
+// Tarjetas de pago
+Route::middleware(['auth'])->group(function () {
+    Route::get('/cards', [CardController::class, 'index'])->name('cards.index');
+    Route::post('/cards', [CardController::class, 'store'])->name('cards.store');
+    Route::delete('/cards/{card}', [CardController::class, 'destroy'])->name('cards.destroy');
+});
+
 // Modelos 3D - rutas usuario autenticado
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/models', [ModelUserController::class, 'index'])->name('models.index');
@@ -36,6 +44,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/models/{threed}/comment', [CommentController::class, 'store'])->name('comments.store');
     Route::get('/my-models', [PurchaseController::class, 'myModels'])->name('purchases.my-models');
     Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
+    Route::post('/checkout/single/{threed}', [CheckoutController::class, 'processSingle'])->name('checkout.single');
 });
 
 // Admin routes

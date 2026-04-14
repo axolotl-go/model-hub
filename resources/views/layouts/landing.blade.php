@@ -2175,8 +2175,6 @@
                 </a>
                 <div class="hidden md:flex items-center gap-8">
                     <a class="{{$Browse}}" href="{{ route('landing') }}">Browse</a>
-                    <a class="{{$Exclusives}}" href="{{ route('exclusives') }}">Exclusives</a>
-                    <a class="{{$FreeAssets}}" href="{{ route('free-assets') }}">Free Assets</a>
                 </div>
             </div>
             <div class="flex items-center gap-6">

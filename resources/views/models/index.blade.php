@@ -22,7 +22,7 @@
             class="group bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800/50 hover:border-zinc-700 transition-all duration-300 hover:-translate-y-0.5">
             <div class="aspect-video relative overflow-hidden bg-zinc-800">
                 <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-75 group-hover:opacity-100"
-                    src="{{ $model->preview_image ?? 'https://picsum.photos/id/10/400/300' }}" />
+                    src="{{ $model->preview_image ? asset('storage/' . $model->preview_image) : 'https://picsum.photos/seed/' . $model->id . '/400/300' }}" />
                 <div class="absolute inset-0 bg-gradient-to-t from-zinc-900/70 to-transparent"></div>
                 <div
                     class="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-widest text-cyan-400 border border-white/5">

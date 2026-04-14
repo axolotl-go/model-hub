@@ -134,21 +134,68 @@
                     </div>
 
                     {{-- Checkout --}}
-                    <form action="{{ route('checkout.process') }}" method="POST">
-                        @csrf
-                        <button type="submit"
-                            class="w-full bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-300 hover:to-cyan-400 text-black py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg shadow-cyan-500/20">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="size-4">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
-                            </svg>
-                            Proceed to Checkout
-                        </button>
-                    </form>
+                    @if($cards->count())
+                        {{-- Mostrar tarjetas para seleccionar --}}
+                        <div class="space-y-3">
+                            <p class="text-xs font-bold text-zinc-500 uppercase tracking-widest">Selecciona una tarjeta</p>
+                            <form action="{{ route('checkout.process') }}" method="POST" id="checkout-form">
+                                @csrf
+                                <div class="space-y-2 mb-4">
+                                    @foreach($cards as $index => $card)
+                                        <label class="flex items-center gap-3 p-3 bg-zinc-800/60 hover:bg-zinc-800 border border-zinc-700/50 hover:border-cyan-500/40 rounded-xl cursor-pointer transition-all group">
+                                            <input type="radio" name="card_id" value="{{ $card->id }}"
+                                                   {{ $index === 0 ? 'checked' : '' }}
+                                                   class="accent-cyan-400 flex-shrink-0">
+                                            <div class="flex-1 min-w-0">
+                                                <p class="text-xs font-mono text-white">**** **** **** {{ $card->card_number }}</p>
+                                                <p class="text-[10px] text-zinc-500 mt-0.5">
+                                                    {{ strtoupper($card->card_brand) }} · Vence {{ $card->expiry }} · {{ $card->owner_name }}
+                                                </p>
+                                            </div>
+                                            @if($card->is_expired)
+                                                <span class="text-[9px] text-red-400 font-bold uppercase">Vencida</span>
+                                            @endif
+                                        </label>
+                                    @endforeach
+                                </div>
+
+                                <button type="submit"
+                                    class="w-full bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-300 hover:to-cyan-400 text-black py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg shadow-cyan-500/20">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                        stroke="currentColor" class="size-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                                    </svg>
+                                    Confirmar Compra · ${{ $total }}
+                                </button>
+                            </form>
+                        </div>
+                    @else
+                        {{-- Sin tarjetas --}}
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3 p-3 bg-yellow-500/5 border border-yellow-500/20 rounded-xl">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                     stroke="currentColor" class="size-4 text-yellow-400 mt-0.5 flex-shrink-0">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                                </svg>
+                                <p class="text-xs text-yellow-400/80">
+                                    Necesitas agregar una tarjeta para realizar tu compra.
+                                </p>
+                            </div>
+                            <a href="{{ route('cards.index') }}"
+                               class="w-full bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-300 hover:to-cyan-400 text-black py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all active:scale-95">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                     stroke="currentColor" class="size-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                                Agregar Tarjeta
+                            </a>
+                        </div>
+                    @endif
 
                     <p class="text-center text-[10px] text-zinc-600">
-                        Secured by SSL · No hidden fees
+                        Pago simulado · Entorno de pruebas
                     </p>
                 </div>
 

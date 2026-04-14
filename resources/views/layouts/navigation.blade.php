@@ -2,10 +2,10 @@
     <!-- Primary Navigation Menu -->
     <div class="w-full px-6">
         <div class="flex justify-between h-16">
-            <div class="flex">
+            <div class="flex items-center">
                 <!-- Logo -->
                 <div>
-                    <a href="{{ route('kinetic-gallery') }}">
+                    <a classhref="{{ route('kinetic-gallery') }}">
                         <x-application-logo />
                     </a>
                 </div>
@@ -56,6 +56,10 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
+                        <x-dropdown-link :href="route('cards.index')">
+                            {{ __('Mis Tarjetas') }}
+                        </x-dropdown-link>
+
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -103,6 +107,10 @@
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('cards.index')">
+                    {{ __('Mis Tarjetas') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->

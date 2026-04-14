@@ -30,8 +30,8 @@
     <div class="min-h-screen bg-zinc-950 flex">
         @include('layouts.aside')
 
-        <div class="flex-1 ml-64">
-            <main class="p-8">
+        <div class="flex-1 ml-64 min-h-screen overflow-y-auto">
+            <main class="p-8 pt-10 max-w-7xl mx-auto">
                 {{ $slot }}
             </main>
         </div>

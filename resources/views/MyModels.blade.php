@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="flex-1 overflow-y-auto bg-zinc-950 px-8 py-8">
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between mb-8">
             <div>
                 <h2 class="text-2xl font-bold tracking-tight text-white">My Models</h2>
                 <p class="text-zinc-500 mt-1 text-sm">Your purchased 3D assets, ready to download</p>
@@ -13,68 +13,72 @@
                 </svg>
             </a>
         </div>
-        <section>
-            <div class="max-w-6xl mx-auto mt-4">
-                @if(count($thread) === 0)
-                {{-- Empty state --}}
-                <div class="flex flex-col items-center justify-center py-32 text-center">
-                    <div class="w-20 h-20 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">You don't have any model yet</h3>
-                    <p class="text-zinc-500 text-sm mb-8">Browse the gallery and add assets to get started.</p>
-                    <a href="{{ route('landing') }}"
-                        class="bg-gradient-to-r from-cyan-400 to-cyan-500 text-black px-8 py-3 rounded-xl font-bold text-sm transition-all active:scale-95">
-                        Browse Assets
-                    </a>
+
+        @if(count($thread) === 0)
+            {{-- Empty state --}}
+            <div class="flex flex-col items-center justify-center py-32 text-center">
+                <div class="w-20 h-20 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                    </svg>
                 </div>
-                @else
+                <h3 class="text-xl font-bold text-white mb-2">You don't have any model yet</h3>
+                <p class="text-zinc-500 text-sm mb-8">Browse the gallery and add assets to get started.</p>
+                <a href="{{ route('landing') }}"
+                    class="bg-gradient-to-r from-cyan-400 to-cyan-500 text-black px-8 py-3 rounded-xl font-bold text-sm transition-all active:scale-95">
+                    Browse Assets
+                </a>
+            </div>
+        @else
+            {{-- Grid 4 columnas --}}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                 @foreach($thread as $model)
                 <div class="group bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800/50 hover:border-zinc-700 transition-all duration-300 hover:-translate-y-0.5">
                     <div class="aspect-video relative overflow-hidden bg-zinc-800">
-                        <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-75 group-hover:opacity-100" src="{{ $model['img'] }}" />
+                        <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-75 group-hover:opacity-100"
+                             src="{{ $model['img'] }}" alt="{{ $model['name'] }}" />
                         <div class="absolute inset-0 bg-gradient-to-t from-zinc-900/70 to-transparent"></div>
-                        <div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-widest {{ $model['color'] }} border border-white/5">
+                        {{-- Tag badge --}}
+                        @if($model['tag'])
+                        <div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-widest text-cyan-400 border border-white/5">
                             {{ $model['tag'] }}
                         </div>
-                        {{-- Verified badge bottom-left --}}
+                        @endif
+                        {{-- Owned badge --}}
                         <div class="absolute bottom-3 left-3 flex items-center gap-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4 text-cyan-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4 text-emerald-400">
                                 <path fill-rule="evenodd" d="M8.603 3.799A4.49 4.49 0 0 1 12 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 0 1 3.498 1.307 4.491 4.491 0 0 1 1.307 3.497A4.49 4.49 0 0 1 21.75 12a4.49 4.49 0 0 1-1.549 3.397 4.491 4.491 0 0 1-1.307 3.497 4.491 4.491 0 0 1-3.497 1.307A4.49 4.49 0 0 1 12 21.75a4.49 4.49 0 0 1-3.397-1.549 4.49 4.49 0 0 1-3.498-1.306 4.491 4.491 0 0 1-1.307-3.498A4.49 4.49 0 0 1 2.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 0 1 1.307-3.497 4.49 4.49 0 0 1 3.497-1.307Zm7.007 6.387a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
                             </svg>
-                            <span class="text-[9px] text-cyan-400 font-bold uppercase tracking-wider">Verified</span>
+                            <span class="text-[9px] text-emerald-400 font-bold uppercase tracking-wider">Owned</span>
                         </div>
                     </div>
                     <div class="p-4">
-                        <h3 class="text-sm font-bold text-white group-hover:text-cyan-400 transition-colors leading-snug mb-1">{{ $model['name'] }}</h3>
-                        <p class="text-[9px] text-zinc-600 uppercase tracking-wider mb-3">Purchased {{ $model['date'] }}</p>
+                        <h3 class="text-sm font-bold text-white group-hover:text-cyan-400 transition-colors leading-snug mb-1 truncate">
+                            {{ $model['name'] }}
+                        </h3>
+                        <p class="text-[9px] text-zinc-600 uppercase tracking-wider mb-3">
+                            Purchased {{ $model['date'] }}
+                        </p>
                         <div class="flex items-center gap-3 mb-3 text-zinc-500">
-                            <span class="text-[10px] flex items-center gap-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-3">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 8.485-7.5 11.9-7.5 11.9s-7.5-3.415-7.5-11.9a7.5 7.5 0 1 1 15 0Z" />
-                                </svg>
-                                {{ $model['size'] }}
-                            </span>
                             <span class="text-[10px] flex items-center gap-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-3">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                                 </svg>
-                                {{ $model['format'] }}
+                                {{ strtoupper($model['format']) }}
                             </span>
                         </div>
-                        <button class="w-full bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-300 hover:to-cyan-400 text-black py-2 rounded-lg font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-lg shadow-cyan-500/10">
+                        <a href="{{ $model['file_path'] ? asset('storage/' . $model['file_path']) : '#' }}"
+                           {{ $model['file_path'] ? 'download' : '' }}
+                           class="w-full bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-300 hover:to-cyan-400 text-black py-2 rounded-lg font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-lg shadow-cyan-500/10">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-3.5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                             </svg>
                             Download
-                        </button>
+                        </a>
                     </div>
                 </div>
                 @endforeach
-                @endif
             </div>
-        </section>
+        @endif
     </div>
-    </x-admin-layout>
+</x-app-layout>

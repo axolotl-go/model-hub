@@ -1,3 +1,6 @@
+@php
+    $userCards = auth()->check() ? auth()->user()->cards()->latest()->get() : collect();
+@endphp
 <x-app-layout>
     <div class="min-w-screen w-full grid grid-cols-1 lg:grid-cols-12 gap-12">
 
@@ -21,7 +24,7 @@
             {{-- Product card --}}
             <div class="bg-zinc-900 border border-zinc-800/60 rounded-2xl overflow-hidden group">
                 <div class="relative w-full h-96 overflow-hidden">
-                    <img src="{{ $threed->preview_image ?? 'https://picsum.photos/id/10/600/400' }}"
+                    <img src="{{ $threed->preview_image ? asset('storage/' . $threed->preview_image) : 'https://picsum.photos/seed/' . $threed->id . '/600/400' }}"
                         alt="{{ $threed->name }}"
                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100" />
                     <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent"></div>
@@ -132,26 +135,114 @@
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                                     </svg>
-                                    In Cart - View Checkout
+                                    In Cart — View Checkout
                                 </a>
                             @else
+                                {{-- Botón Add to Cart --}}
                                 <form action="{{ route('cart.add', $threed) }}" method="POST">
                                     @csrf
                                     <button type="submit"
-                                        class="w-full bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-300 hover:to-cyan-400 text-black py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg shadow-cyan-500/20">
+                                        class="w-full bg-zinc-800 hover:bg-zinc-700 text-white py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all active:scale-95">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                             stroke="currentColor" class="size-4">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                                         </svg>
                                         Add to Cart
                                     </button>
                                 </form>
+
+                                {{-- Botón Buy Now --}}
+                                @if($threed->price > 0)
+                                    <button type="button" onclick="document.getElementById('buy-now-modal').classList.remove('hidden')"
+                                        class="w-full bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-300 hover:to-cyan-400 text-black py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg shadow-cyan-500/20">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                            stroke="currentColor" class="size-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                                        </svg>
+                                        Comprar Ahora · ${{ number_format($threed->price, 2) }}
+                                    </button>
+                                @else
+                                    {{-- Modelo gratuito: checkout directo --}}
+                                    <form action="{{ route('checkout.single', $threed) }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="card_id" value="0">
+                                        <button type="submit"
+                                            class="w-full bg-gradient-to-r from-emerald-400 to-emerald-500 hover:from-emerald-300 hover:to-emerald-400 text-black py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all active:scale-95">
+                                            Obtener Gratis
+                                        </button>
+                                    </form>
+                                @endif
                             @endif
                         @else
                             <a href="{{ route('login') }}"
                                 class="w-full bg-gradient-to-r from-cyan-400 to-cyan-500 text-black py-3.5 rounded-xl font-bold text-sm flex items-center justify-center transition-all">
-                                Login to Add to Cart
+                                Login to Purchase
                             </a>
+                        @endauth
+
+                        {{-- Modal Buy Now --}}
+                        @auth
+                        <div id="buy-now-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+                            <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 w-full max-w-md shadow-2xl">
+                                <div class="flex items-center justify-between mb-6">
+                                    <h3 class="text-lg font-black text-white">Confirmar Compra</h3>
+                                    <button onclick="document.getElementById('buy-now-modal').classList.add('hidden')"
+                                            class="text-zinc-500 hover:text-white transition-colors">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                             stroke="currentColor" class="size-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                {{-- Resumen --}}
+                                <div class="flex items-center gap-4 p-4 bg-zinc-800/60 rounded-xl mb-6">
+                                    <div class="w-12 h-12 rounded-lg bg-zinc-700 overflow-hidden flex-shrink-0">
+                                        <img src="{{ $threed->preview_image ? asset('storage/' . $threed->preview_image) : 'https://picsum.photos/seed/' . $threed->id . '/100/100' }}"
+                                             alt="{{ $threed->name }}" class="w-full h-full object-cover">
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-sm font-bold text-white truncate">{{ $threed->name }}</p>
+                                        <p class="text-xs text-zinc-500">{{ $threed->category->name }}</p>
+                                    </div>
+                                    <p class="text-lg font-black text-cyan-400">${{ number_format($threed->price, 2) }}</p>
+                                </div>
+
+                                @if($userCards->count())
+                                    <form action="{{ route('checkout.single', $threed) }}" method="POST">
+                                        @csrf
+                                        <p class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-3">Selecciona tu tarjeta</p>
+                                        <div class="space-y-2 mb-6">
+                                            @foreach($userCards as $idx => $card)
+                                                <label class="flex items-center gap-3 p-3 bg-zinc-800/60 hover:bg-zinc-800 border border-zinc-700/50 hover:border-cyan-500/40 rounded-xl cursor-pointer transition-all">
+                                                    <input type="radio" name="card_id" value="{{ $card->id }}"
+                                                           {{ $idx === 0 ? 'checked' : '' }}
+                                                           class="accent-cyan-400">
+                                                    <div class="flex-1 min-w-0">
+                                                        <p class="text-xs font-mono text-white">**** **** **** {{ $card->card_number }}</p>
+                                                        <p class="text-[10px] text-zinc-500">{{ strtoupper($card->card_brand) }} · {{ $card->expiry }}</p>
+                                                    </div>
+                                                </label>
+                                            @endforeach
+                                        </div>
+                                        <button type="submit"
+                                                class="w-full py-3.5 bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-300 hover:to-cyan-400 text-black font-bold text-sm rounded-xl transition-all active:scale-95 shadow-lg shadow-cyan-500/20">
+                                            Confirmar · ${{ number_format($threed->price, 2) }}
+                                        </button>
+                                    </form>
+                                @else
+                                    <div class="text-center py-4">
+                                        <p class="text-zinc-500 text-sm mb-4">No tienes tarjetas guardadas.</p>
+                                        <a href="{{ route('cards.index') }}"
+                                           class="inline-flex items-center gap-2 px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-sm rounded-xl transition-all">
+                                            Agregar Tarjeta
+                                        </a>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
                         @endauth
                     @endif
                 </div>
