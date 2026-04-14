@@ -1,44 +1,86 @@
 <x-admin-layout>
     <div class="space-y-6">
+        {{-- Header --}}
         <div class="flex items-center justify-between">
-            <h2 class="text-2xl font-bold text-white">3D Models Management</h2>
-            <div class="flex gap-4">
-                <a href="{{ route('admin.models.create') }}"
-                    class="px-4 py-2 bg-cyan-500 hover:bg-cyan-600 text-black font-bold rounded-lg transition-colors">
-                    + Create Model
-                </a>
-                <a href="{{ route('admin.dashboard') }}"
-                    class="text-sm text-zinc-400 hover:text-cyan-400 transition-colors">Back to Dashboard</a>
+            <div>
+                <h2 class="text-2xl font-bold text-white">3D Models</h2>
+                <p class="text-sm text-zinc-500 mt-1">
+                    {{ $models->total() }} {{ Str::plural('model', $models->total()) }} in the library
+                </p>
             </div>
+            <a href="{{ route('admin.models.create') }}"
+               class="flex items-center gap-2 px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-black text-sm font-bold rounded-lg transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                     stroke="currentColor" class="size-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+                Create Model
+            </a>
         </div>
+
+        @if (session('success'))
+            <div class="flex items-center gap-3 px-4 py-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg text-emerald-400 text-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                     stroke="currentColor" class="size-5 flex-shrink-0">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                </svg>
+                {{ session('success') }}
+            </div>
+        @endif
 
         @if($models->count())
             <div class="overflow-x-auto bg-zinc-900 rounded-xl border border-zinc-800/60">
                 <table class="w-full">
                     <thead class="border-b border-zinc-800/60">
-                        <tr class="text-left text-xs font-bold uppercase tracking-widest text-zinc-400">
-                            <th class="px-6 py-4">Name</th>
+                        <tr class="text-left text-xs font-bold uppercase tracking-widest text-zinc-500">
+                            <th class="px-6 py-4">Model</th>
                             <th class="px-6 py-4">Category</th>
                             <th class="px-6 py-4">Price</th>
                             <th class="px-6 py-4">Author</th>
-                            <th class="px-6 py-4">Created</th>
-                            <th class="px-6 py-4">Actions</th>
+                            <th class="px-6 py-4">Added</th>
+                            <th class="px-6 py-4 text-right">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-zinc-800/40">
                         @foreach($models as $model)
-                            <tr class="hover:bg-zinc-800/50 transition-colors">
+                            <tr class="hover:bg-zinc-800/40 transition-colors group">
                                 <td class="px-6 py-4">
-                                    <p class="font-medium text-white">{{ $model->name }}</p>
+                                    <div class="flex items-center gap-3">
+                                        {{-- Preview thumbnail --}}
+                                        <div class="w-10 h-10 rounded-lg bg-zinc-800 border border-zinc-700 overflow-hidden flex-shrink-0">
+                                            @if($model->preview_image)
+                                                <img src="{{ asset('storage/' . $model->preview_image) }}"
+                                                     alt="{{ $model->name }}"
+                                                     class="w-full h-full object-cover">
+                                            @else
+                                                <div class="w-full h-full flex items-center justify-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                         stroke-width="1" stroke="currentColor" class="size-5 text-zinc-600">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                              d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                                                    </svg>
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <div>
+                                            <p class="font-medium text-white text-sm leading-tight">{{ $model->name }}</p>
+                                            @if($model->tags)
+                                                <p class="text-xs text-zinc-600 truncate max-w-[160px]">{{ $model->tags }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <p class="text-sm text-zinc-400">{{ $model->category->name }}</p>
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium
+                                                 bg-violet-500/10 text-violet-400 border border-violet-500/20">
+                                        {{ $model->category->name }}
+                                    </span>
                                 </td>
                                 <td class="px-6 py-4">
                                     @if($model->price == 0)
-                                        <span class="font-bold text-emerald-400">Free</span>
+                                        <span class="text-sm font-bold text-emerald-400">Free</span>
                                     @else
-                                        <span class="font-bold text-white">${{ number_format($model->price, 2) }}</span>
+                                        <span class="text-sm font-bold text-white">${{ number_format($model->price, 2) }}</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4">
@@ -46,190 +88,59 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <p class="text-sm text-zinc-400">{{ $model->created_at->format('M d, Y') }}</p>
+                                    <p class="text-xs text-zinc-600">{{ $model->created_at->diffForHumans() }}</p>
                                 </td>
-                                <td class="px-6 py-4 text-right space-x-2">
-                                    <a href="{{ route('admin.models.edit', $model) }}"
-                                        class="inline-block px-3 py-1 bg-cyan-500/10 text-cyan-400 text-xs font-bold rounded hover:bg-cyan-500/20 transition-colors">
-                                        Edit
-                                    </a>
-                                    <form action="{{ route('admin.models.destroy', $model) }}" method="POST"
-                                        class="inline-block" onsubmit="return confirm('Are you sure?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="px-3 py-1 bg-red-500/10 text-red-400 text-xs font-bold rounded hover:bg-red-500/20 transition-colors">
-                                            Delete
-                                        </button>
-                                    </form>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <a href="{{ route('admin.models.edit', $model) }}"
+                                           class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white text-xs font-medium rounded-lg transition-colors">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                 stroke-width="1.5" stroke="currentColor" class="size-3.5">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Z" />
+                                            </svg>
+                                            Edit
+                                        </a>
+                                        <form action="{{ route('admin.models.destroy', $model) }}" method="POST"
+                                              onsubmit="return confirm('Delete \'{{ $model->name }}\'? This cannot be undone.')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-medium rounded-lg transition-colors">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                     stroke-width="1.5" stroke="currentColor" class="size-3.5">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                          d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                </svg>
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-            {{ $models->links() }}
+
+            {{-- Pagination --}}
+            <div class="flex justify-end">
+                {{ $models->links() }}
+            </div>
         @else
-            <div class="text-center py-12 text-zinc-500">
-                <p>No models found</p>
+            <div class="flex flex-col items-center justify-center py-20 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1"
+                     stroke="currentColor" class="size-12 text-zinc-700 mb-4">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                </svg>
+                <p class="text-zinc-500 font-medium">No models found</p>
+                <p class="text-zinc-600 text-sm mt-1 mb-4">Upload the first 3D model to get started</p>
+                <a href="{{ route('admin.models.create') }}"
+                   class="px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-black text-sm font-bold rounded-lg transition-colors">
+                    Create First Model
+                </a>
             </div>
         @endif
     </div>
-    <div class="col-span-1 p-6 bg-surface-container-low rounded-xl border-l-2 border-primary/40">
-        <p class="text-xs font-label text-on-surface-variant uppercase tracking-widest mb-1">Total Assets</p>
-        <h3 class="text-3xl font-headline font-bold text-primary">1,248</h3>
-    </div>
-    <div class="col-span-1 p-6 bg-surface-container-low rounded-xl border-l-2 border-secondary/40">
-        <p class="text-xs font-label text-on-surface-variant uppercase tracking-widest mb-1">Active Listings</p>
-        <h3 class="text-3xl font-headline font-bold text-secondary">892</h3>
-    </div>
-    <div class="col-span-1 p-6 bg-surface-container-low rounded-xl border-l-2 border-tertiary/40">
-        <p class="text-xs font-label text-on-surface-variant uppercase tracking-widest mb-1">Pending Review</p>
-        <h3 class="text-3xl font-headline font-bold text-tertiary">14</h3>
-    </div>
-    <div class="col-span-1 p-6 bg-surface-container-low rounded-xl border-l-2 border-on-surface-variant/40">
-        <p class="text-xs font-label text-on-surface-variant uppercase tracking-widest mb-1">Storage Used</p>
-        <h3 class="text-3xl font-headline font-bold text-on-surface">4.2 TB</h3>
-    </div>
-    </section>
-    <!-- Main Assets Table -->
-    <div
-        class="flex-1 bg-surface-container-low rounded-2xl overflow-hidden shadow-2xl shadow-black/50 border border-outline-variant/5">
-        <table class="w-full text-left border-collapse">
-            <thead>
-                <tr class="bg-surface-container-high/50 border-b border-outline-variant/10">
-                    <th class="px-6 py-4 text-xs font-label uppercase tracking-widest text-on-surface-variant">Asset
-                    </th>
-                    <th class="px-6 py-4 text-xs font-label uppercase tracking-widest text-on-surface-variant">
-                        Category</th>
-                    <th class="px-6 py-4 text-xs font-label uppercase tracking-widest text-on-surface-variant">Price
-                    </th>
-                    <th class="px-6 py-4 text-xs font-label uppercase tracking-widest text-on-surface-variant">Sales
-                    </th>
-                    <th class="px-6 py-4 text-xs font-label uppercase tracking-widest text-on-surface-variant">
-                        Status</th>
-                    <th
-                        class="px-6 py-4 text-xs font-label uppercase tracking-widest text-on-surface-variant text-right">
-                        Actions</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-outline-variant/5">
-                <!-- Row 1 -->
-                <tr class="hover:bg-surface-container-highest/30 transition-colors group">
-                    <td class="px-6 py-4">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded bg-surface-container-highest overflow-hidden">
-                                <img alt="Cyberpunk Robot Hand"
-                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                                    data-alt="close-up of a futuristic chrome robotic hand with glowing neon purple wiring against a dark industrial background"
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZqN91Im_xB_MHiu-dKjGemKviCd23m4cNV3wMkiRZT_I0n_3JIpvUrNZq6OnFBvS6a5G9HjQh_uJv10SI_sds96NRRwjYkRKnb70Lo6M9I-rqkMeTDg_4Ajp3pTCmvkHMRB3YtjCQie6G7RltMrJJx_41NJ2rqr-iK6ORmrxRpWtjMhypLsQQxLnULAAJlqCKY647CEbTPkU8sgTxRapcc-j3LJpNQwI0BZRE2rHjxeKVplSIn6wFcHrrXuW0ZdKp-2PBoimWAAc" />
-                            </div>
-                            <div>
-                                <p class="font-headline font-medium text-on-surface">Cyber-Arm MK.IV</p>
-                                <p class="text-xs font-label text-on-surface-variant">OBJ, FBX, BLEND</p>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4 text-sm font-label text-on-surface-variant">Cybernetics</td>
-                    <td class="px-6 py-4 font-headline font-bold text-primary">$120.00</td>
-                    <td class="px-6 py-4 text-sm font-label text-on-surface">432</td>
-                    <td class="px-6 py-4">
-                        <span
-                            class="inline-flex items-center px-2 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-tighter">Live</span>
-                    </td>
-                    <td class="px-6 py-4 text-right">
-                        <div class="flex justify-end gap-2">
-                            <button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span
-                                    class="material-symbols-outlined text-lg" data-icon="edit">edit</span></button>
-                            <button class="p-2 text-on-surface-variant hover:text-error transition-colors"><span
-                                    class="material-symbols-outlined text-lg" data-icon="delete">delete</span></button>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Row 2 -->
-                <tr class="hover:bg-surface-container-highest/30 transition-colors group">
-                    <td class="px-6 py-4">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded bg-surface-container-highest overflow-hidden">
-                                <img alt="Neoclassical Bust"
-                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                                    data-alt="minimalist 3d render of a classical greek bust sculpture with a modern holographic glitch effect overlay"
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7bN3mpYwvpowLg3MxBeobJ3Odw4vVZFAAwMxohtdoP06CrEC7VBOpnQzGw9kkD7WW7HOpHm9wK-SGRE5fv0Uws25BhdxO6hF3b_ex7J4uL5QykCn-eq7vSR5nyDCncfLswjHSp9C4HzObn8IgrU4lHqJakJGBUCycs51xIJLSYkOR4tqUW--QMPc8VS3bFTqf3pwEmr9nttSkZsTgMZJROMB2A5utmIjI0DrBmilHJJlT2sixn50-WY5PT6hG5QafkOYt8zbAUR0" />
-                            </div>
-                            <div>
-                                <p class="font-headline font-medium text-on-surface">Digital Apollo</p>
-                                <p class="text-xs font-label text-on-surface-variant">STL, OBJ</p>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4 text-sm font-label text-on-surface-variant">Sculptures</td>
-                    <td class="px-6 py-4 font-headline font-bold text-primary">$45.00</td>
-                    <td class="px-6 py-4 text-sm font-label text-on-surface">1,029</td>
-                    <td class="px-6 py-4">
-                        <span
-                            class="inline-flex items-center px-2 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-tighter">Live</span>
-                    </td>
-                    <td class="px-6 py-4 text-right">
-                        <div class="flex justify-end gap-2">
-                            <button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span
-                                    class="material-symbols-outlined text-lg" data-icon="edit">edit</span></button>
-                            <button class="p-2 text-on-surface-variant hover:text-error transition-colors"><span
-                                    class="material-symbols-outlined text-lg" data-icon="delete">delete</span></button>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Row 3 -->
-                <tr class="hover:bg-surface-container-highest/30 transition-colors group">
-                    <td class="px-6 py-4">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded bg-surface-container-highest overflow-hidden">
-                                <img alt="Abstract Landscape"
-                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                                    data-alt="surreal 3d landscape with floating geometric obsidian islands over a liquid mercury ocean under a red sky"
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2jz__B0nzR8hY1CaSsWFGTkknWymbx9xw6QwwEp7drx43XMGfpusrJ-GjqEKaLgclAUGRPrPg4Xdv-msWN263eQ0y99GAgz3JuLzVPj0Z2Bq5Sc3A0lVih_OHiN2RoKk3dvEoM0uTPRW2SU43yuZsgVR0CAs8W6fP5ZIWyd3ZaCbOY2NtHuL51UsJTYxq4McTfv2czjnfBfIRDXp9BaOAjWqRvFKh5Qz_c3_1kpma_KNyir7eo9wxSAubGSxNGdvhsTblrFU0tFI" />
-                            </div>
-                            <div>
-                                <p class="font-headline font-medium text-on-surface">Void Lands #02</p>
-                                <p class="text-xs font-label text-on-surface-variant">BLEND, GLTF</p>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4 text-sm font-label text-on-surface-variant">Environments</td>
-                    <td class="px-6 py-4 font-headline font-bold text-primary">$290.00</td>
-                    <td class="px-6 py-4 text-sm font-label text-on-surface">0</td>
-                    <td class="px-6 py-4">
-                        <span
-                            class="inline-flex items-center px-2 py-1 rounded-full bg-tertiary/10 text-tertiary text-[10px] font-black uppercase tracking-tighter">Reviewing</span>
-                    </td>
-                    <td class="px-6 py-4 text-right">
-                        <div class="flex justify-end gap-2">
-                            <button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span
-                                    class="material-symbols-outlined text-lg" data-icon="edit">edit</span></button>
-                            <button class="p-2 text-on-surface-variant hover:text-error transition-colors"><span
-                                    class="material-symbols-outlined text-lg" data-icon="delete">delete</span></button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <table
-            class="flex-1 bg-surface-container-low rounded-2xl overflow-hidden shadow-2xl shadow-black/50 border border-outline-variant/5">
-
-            <x-dynamic-table :headers="['Asset', 'Category', 'Price', 'Sales', 'Status', 'Actions']" :rows="[['a', 'b', 'c', 'd', 'e', 'f']]" />
-
-        </table>
-
-        <footer class="p-6 bg-surface-container-high/20 flex justify-between items-center">
-            <p class="text-xs font-label text-on-surface-variant uppercase tracking-widest">Showing 3 of 1,248
-                assets</p>
-            <div class="flex gap-2">
-                <button
-                    class="px-3 py-1 bg-surface-container-highest text-on-surface rounded hover:bg-outline-variant/30 transition-colors">Previous</button>
-                <button
-                    class="px-3 py-1 bg-surface-container-highest text-on-surface rounded hover:bg-outline-variant/30 transition-colors">Next</button>
-            </div>
-        </footer>
-    </div>
-    </main>
-
 </x-admin-layout>
