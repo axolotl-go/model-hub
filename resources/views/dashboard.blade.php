@@ -5,7 +5,7 @@
                 <h2 class="text-2xl font-bold tracking-tight text-white">Dashboard</h2>
                 <p class="text-zinc-500 mt-1 text-sm">Welcome back, {{ Auth::user()->name }}</p>
             </div>
-            <a href="{{ route('models.index') }}"
+            <a href="{{ route('landing') }}"
                 class="flex items-center gap-2 text-xs font-bold border border-zinc-700 hover:border-cyan-500 text-zinc-400 hover:text-cyan-400 px-4 py-2 rounded-xl transition-all duration-200 uppercase tracking-widest">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-4">

@@ -15,15 +15,28 @@ class LandingController extends Controller
         return $categories;
     }
 
-    public function kineticGallery()
+    public function kineticGallery(Request $request)
     {
         $Browse = 'text-cyan-400 border-b-2 border-violet-500 pb-1';
         $Exclusives = 'text-zinc-400 hover:text-zinc-100 transition-colors';
         $FreeAssets = 'text-zinc-400 hover:text-zinc-100 transition-colors';
 
-        $threeds = Threed::latest()->take(12)->get();
+        $query = Threed::latest();
+
+        // Filtrar por categoría si viene el parámetro
+        $activeCategory = $request->query('category');
+        if ($activeCategory) {
+            $query->where('category_id', $activeCategory);
+        }
+
+        // Modelo random para el hero (con preview_image preferiblemente)
+        $featured = Threed::whereNotNull('preview_image')->inRandomOrder()->first()
+            ?? Threed::inRandomOrder()->first();
+
+        $threeds = $query->take(24)->get();
         $categories = $this->AllCategories();
-        return view('Landing.welcome', compact('threeds', 'categories', 'Browse', 'Exclusives', 'FreeAssets'));
+
+        return view('Landing.welcome', compact('threeds', 'categories', 'Browse', 'Exclusives', 'FreeAssets', 'activeCategory', 'featured'));
     }
 
     public function index()
@@ -32,7 +45,10 @@ class LandingController extends Controller
         $Exclusives = 'text-zinc-400 hover:text-zinc-100 transition-colors';
         $FreeAssets = 'text-zinc-400 hover:text-zinc-100 transition-colors';
 
-        return view('Landing.Landing', compact('Browse', 'Exclusives', 'FreeAssets'));
+        // 6 modelos aleatorios para la sección Featured
+        $featured = \App\Models\Threed::inRandomOrder()->take(6)->get();
+
+        return view('Landing.Landing', compact('Browse', 'Exclusives', 'FreeAssets', 'featured'));
     }
 
 
