@@ -116,7 +116,7 @@
                         <h2 class="text-4xl font-headline font-bold mb-4 tracking-tight">Featured Models</h2>
                         <p class="text-on-surface-variant">Top performing assets from our worldwide community</p>
                     </div>
-                    <a class="text-primary font-bold hover:underline" href="#">View all models →</a>
+                    <a class="text-primary font-bold hover:underline" href="{{route('landing')}}">View all models →</a>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -127,11 +127,9 @@
                         <div class="p-6">
                             <div class="flex justify-between items-start mb-4">
                                 <h4 class="text-xl font-headline font-bold">Ethereal Organics V2</h4>
-                                <span class="text-primary font-bold">2.4 ETH</span>
+                                <span class="text-primary font-bold">Free</span>
                             </div>
                             <div class="flex items-center gap-3">
-                                <img alt="Artist" class="w-6 h-6 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXQD-P2isRHQANFq6G21_4Yky7KPA8GC55-TCK73QwWZCy7HBfiGnIgFmxtjH6M1A4RNPTBVxzXhD4APfQovmACBBbHeUxPUT0WdcggMuEZtFJBKY8fKzBkvgFw7e8ZvPiwkD5MiU9qpNlroqeENwetvMJPRegWJpqs0BqcbH__tOaJGIjT97-696RNJ2YkyNCnjQJcnYAMErm-ppUCdLMtHFTq1DP3T-ZFREpasRdNH5N3aGtTgS_nFHQhhrO1JDtaAAXaqQmKHv7" />
-                                <span class="text-sm text-on-surface-variant">by <span class="text-on-surface">Vector Void</span></span>
                             </div>
                         </div>
                     </div>
