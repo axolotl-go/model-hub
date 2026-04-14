@@ -5,7 +5,7 @@
             <div class="flex items-center">
                 <!-- Logo -->
                 <div>
-                    <a classhref="{{ route('kinetic-gallery') }}">
+                    <a href="{{ route('kinetic-gallery') }}">
                         <x-application-logo />
                     </a>
                 </div>
@@ -16,6 +16,9 @@
             <div class="hidden sm:flex sm:items-center sm:ms-6 gap-6">
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('landing')" :active="false">
+                        {{ __('Browse') }}
+                    </x-nav-link>
 
                     <x-nav-link :href="route('dashboard')" :active="false">
                         {{ __('Dashboard') }}
