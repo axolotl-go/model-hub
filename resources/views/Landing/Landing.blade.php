@@ -51,7 +51,7 @@
     </style>
 </head>
 
-<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<body class="bg-black text-on-surface font-body selection:bg-primary selection:text-on-primary">
 
     <nav class="fixed top-0 w-full z-50 bg-zinc-950/60 backdrop-blur-xl border-b border-white/5">
         <div class="flex justify-between items-center w-full px-8 py-4 max-w-full font-headline tracking-tight">
@@ -137,7 +137,6 @@
             </div>
         </section>
     </main>
-    <x-footer />
 </body>
 
 </html>

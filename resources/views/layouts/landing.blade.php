@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html class="dark" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
@@ -2166,16 +2166,15 @@
     @endif
 </head>
 
-<body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
+<body class="bg-zinc-950 text-zinc-100 flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
+
     <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
-        <nav class="fixed top-0 left-0 right-0 w-full z-50 bg-zinc-950/60 backdrop-blur-xl shadow-lg flex justify-between items-center px-8 h-20">
+        <nav class="fixed top-0 left-0 right-0 w-full z-50 bg-black backdrop-blur-xl shadow-lg flex justify-between items-center px-8 h-20">
             <div class="flex items-center gap-12">
                 <a href="{{ route('kinetic-gallery') }}">
                     <x-application-logo />
                 </a>
-                <div class="hidden md:flex items-center gap-8">
-                    <a class="{{$Browse}}" href="{{ route('landing') }}">Browse</a>
-                </div>
+
             </div>
             <div class="flex items-center gap-6">
 
@@ -2184,20 +2183,20 @@
                 @auth
                 <a
                     href="{{ url('/dashboard') }}"
-                    class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-md text-sm leading-normal">
+                    class="inline-block px-5 py-1.5 text-[#F0F0F0] hover:border-[#F0F0F0] rounded-md text-sm leading-normal">
                     Dashboard
                 </a>
                 @else
                 <a
                     href="{{ route('login') }}"
-                    class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] text-[#1b1b18] border border-transparent hover:border-[#19140035] dark:hover:border-[#3E3E3A] rounded-md text-sm leading-normal">
+                    class="inline-block px-5 py-1.5 text-[#F0F0F0] hover:border-[#F0F0F0] rounded-md text-sm leading-normal">
                     Log in
                 </a>
 
                 @if (Route::has('register'))
                 <a
                     href="{{ route('register') }}"
-                    class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-md text-sm leading-normal">
+                    class="inline-block px-5 py-1.5 text-[#F0F0F0] border border-transparent hover:border-[#F0F0F0] hover:border-[#3E3E3A] rounded-md text-sm leading-normal">
                     Register
                 </a>
                 @endif
@@ -2231,27 +2230,27 @@
 
                 <div class="lg:col-span-7 h-[400px] rounded-2xl overflow-hidden relative group">
                     @if($featured)
-                        <a href="{{ route('models.show', $featured) }}" class="block w-full h-full">
-                            <img
-                                alt="{{ $featured->name }}"
-                                class="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
-                                src="{{ $featured->preview_image ? asset('storage/' . $featured->preview_image) : 'https://picsum.photos/seed/' . $featured->id . '/1000/400' }}" />
-                            {{-- Overlay con info --}}
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                            <div class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                                <p class="text-[10px] text-[#8ff5ff] font-bold uppercase tracking-widest mb-1">
-                                    {{ $featured->category->name ?? 'Model' }}
-                                </p>
-                                <h3 class="text-white font-bold text-xl truncate">{{ $featured->name }}</h3>
-                                <p class="text-zinc-400 text-sm mt-1">
-                                    {{ $featured->price > 0 ? '$' . number_format($featured->price, 2) : 'Free' }}
-                                </p>
-                            </div>
-                        </a>
-                    @else
-                        <div class="w-full h-full bg-zinc-900 flex items-center justify-center">
-                            <p class="text-zinc-600 text-sm">No featured model available</p>
+                    <a href="{{ route('models.show', $featured) }}" class="block w-full h-full">
+                        <img
+                            alt="{{ $featured->name }}"
+                            class="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
+                            src="{{ $featured->preview_image ? asset('storage/' . $featured->preview_image) : 'https://picsum.photos/seed/' . $featured->id . '/1000/400' }}" />
+                        {{-- Overlay con info --}}
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                            <p class="text-[10px] text-[#8ff5ff] font-bold uppercase tracking-widest mb-1">
+                                {{ $featured->category->name ?? 'Model' }}
+                            </p>
+                            <h3 class="text-white font-bold text-xl truncate">{{ $featured->name }}</h3>
+                            <p class="text-zinc-400 text-sm mt-1">
+                                {{ $featured->price > 0 ? '$' . number_format($featured->price, 2) : 'Free' }}
+                            </p>
                         </div>
+                    </a>
+                    @else
+                    <div class="w-full h-full bg-zinc-900 flex items-center justify-center">
+                        <p class="text-zinc-600 text-sm">No featured model available</p>
+                    </div>
                     @endif
                 </div>
     </div>
@@ -2260,7 +2259,7 @@
         <div class="flex flex-wrap gap-2 p-1 bg-[#131316] rounded-xl">
             {{-- Botón "Todos" --}}
             <a href="{{ route('landing') }}"
-               class="px-6 py-2 rounded-lg font-bold text-sm transition-colors
+                class="px-6 py-2 rounded-lg font-bold text-sm transition-colors
                       {{ !isset($activeCategory) || !$activeCategory
                          ? 'bg-[#7000ff] text-white'
                          : 'text-zinc-500 hover:text-zinc-200' }}">
@@ -2269,7 +2268,7 @@
             {{-- Botones de categoría --}}
             @foreach($categories as $category)
             <a href="{{ route('landing', ['category' => $category->id]) }}"
-               class="px-6 py-2 rounded-lg font-bold text-sm transition-colors
+                class="px-6 py-2 rounded-lg font-bold text-sm transition-colors
                       {{ isset($activeCategory) && $activeCategory == $category->id
                          ? 'bg-[#7000ff] text-white'
                          : 'text-zinc-500 hover:text-zinc-200' }}">
@@ -2296,6 +2295,5 @@
     <div class="h-14.5 hidden lg:block"></div>
     @endif
 </body>
-<x-footer />
 
 </html>

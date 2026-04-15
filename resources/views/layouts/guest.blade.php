@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html class="dark" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
@@ -16,15 +16,15 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans text-gray-900 antialiased">
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-[#FDFDFC] dark:bg-[#0a0a0a]">
+<body class="font-sans text-white antialiased bg-zinc-950">
+    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-zinc-200">
         <div>
             <a href="/">
                 <x-application-logo />
             </a>
         </div>
 
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+        <div class="w-full sm:max-w-md mt-6 px-8 py-10 rounded-2xl p-2 bg-zinc-950 border border-zinc-800/50 shadow-2xl shadow-black/50 overflow-hidden sm:rounded-2xl">
             {{ $slot }}
         </div>
     </div>

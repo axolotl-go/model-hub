@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
+<html class="dark" lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
 
 <head>
     <meta charset="utf-8">
@@ -26,8 +26,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased h-full bg-zinc-950">
-    <div class="min-h-screen h-full flex flex-col bg-zinc-950">
+<body class="font-sans antialiased h-full bg-black text-white">
+    <div class="min-h-screen h-full flex flex-col bg-black">
         @include('layouts.navigation')
 
         <!-- Page Heading -->
@@ -45,6 +45,5 @@
         </main>
     </div>
 </body>
-<x-footer />
 
 </html>
