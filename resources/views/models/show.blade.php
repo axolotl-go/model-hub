@@ -24,7 +24,7 @@ $userCards = auth()->check() ? auth()->user()->cards()->latest()->get() : collec
             {{-- Product card --}}
             <div class="bg-zinc-900 border border-zinc-800/60 rounded-2xl overflow-hidden group">
                 <div class="relative w-full h-96 overflow-hidden">
-                    <x-three-d-view :threed_model="$threed" />
+                        <x-three-d-view :model="$threed" />
                 </div>
             </div>
 

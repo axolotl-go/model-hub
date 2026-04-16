@@ -43,7 +43,8 @@
                             </svg>
                         </div>
                         <div>
-                            <p class="text-2xl font-black text-white leading-none">${{ number_format($totalSpent, 2) }}</p>
+                            <p class="text-2xl font-black text-white leading-none">${{ number_format($totalSpent, 2) }}
+                            </p>
                             <p class="text-[10px] text-zinc-500 uppercase tracking-widest mt-1">Total Spent</p>
                         </div>
                     </div>
@@ -112,7 +113,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="font-bold text-white group-hover:text-violet-400 transition-colors">View Cart
+                                    <p class="font-bold text-white group-hover:text-violet-400 transition-colors">View
+                                        Cart
                                     </p>
                                     <p class="text-[12px] text-zinc-500">{{ $cartCount }} items waiting</p>
                                 </div>
@@ -131,7 +133,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="font-bold text-white group-hover:text-emerald-400 transition-colors">My Models
+                                    <p class="font-bold text-white group-hover:text-emerald-400 transition-colors">My
+                                        Models
                                     </p>
                                     <p class="text-[12px] text-zinc-500">{{ $purchasedCount }} owned</p>
                                 </div>
