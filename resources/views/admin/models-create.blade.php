@@ -20,7 +20,7 @@
                                 class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
                                 required>
                             @error('name')
-                                <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                            <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -31,11 +31,11 @@
                                 required>
                                 <option value="">Select a category</option>
                                 @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
                             @error('category_id')
-                                <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                            <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -46,7 +46,7 @@
                                 class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
                                 required>
                             @error('price')
-                                <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                            <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -57,7 +57,7 @@
                                 class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
                                 placeholder="e.g. high-poly, rigged, animated">
                             @error('tags')
-                                <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                            <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                                 class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
                             <p class="text-xs text-zinc-400 mt-1">JPG, PNG. Max 2MB</p>
                             @error('preview_image')
-                                <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                            <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -80,9 +80,9 @@
                             <input type="file" name="file_path" accept=".obj,.gltf,.glb,.fbx,.stl"
                                 class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
                                 required>
-                            <p class="text-xs text-zinc-400 mt-1">OBJ, GLTF, GLB, FBX, STL. Max 100MB</p>
+                            <p class="text-xs text-zinc-400 mt-1">FBX. Max 20MB</p>
                             @error('file_path')
-                                <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                            <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
                     </div>
@@ -95,7 +95,7 @@
                         class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
                         required>{{ old('description') }}</textarea>
                     @error('description')
-                        <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                    <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
 
