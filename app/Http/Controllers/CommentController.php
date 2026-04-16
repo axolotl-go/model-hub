@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Threed;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,5 +37,13 @@ class CommentController extends Controller
         return redirect()->back()->with('success', 'Comment deleted');
     }
 
+
+    public function index()
+    {
+        $comments = Comment::orderBy('created_at','desc')->paginate(10);
+        $models =Threed::orderBy('created_at','desc')->paginate(10);
+
+        return view('admin.comments', compact('models','comments'));
+    }
     
 }

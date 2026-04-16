@@ -33,15 +33,13 @@ class StoreCartController extends Controller
         })->toArray();
 
         $subtotal = array_sum(array_column($cartItemsFormatted, 'price'));
-        $discount = $subtotal > 0 ? round($subtotal * 0.05, 2) : 0; // 5% discount
-        $total    = $subtotal - $discount;
+        $total    = $subtotal;
 
         $cards = $user->cards()->latest()->get();
 
         return view('StoreCart', [
             'cartItems' => collect($cartItemsFormatted),
             'subtotal'  => $subtotal,
-            'discount'  => $discount,
             'total'     => $total,
             'cards'     => $cards,
         ]);

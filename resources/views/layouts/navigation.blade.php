@@ -56,6 +56,11 @@
 
                     <x-slot name="content">
 
+                        @if(Auth::user()->role === 'admin')
+                            <x-dropdown-link :href="route('admin.dashboard')">
+                                {{ __('Admin Panel') }}
+                            </x-dropdown-link>
+                        @endif
 
                         <x-dropdown-link :href="route('cards.index')">
                             {{ __('Mis Tarjetas') }}
