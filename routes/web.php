@@ -9,13 +9,14 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ModelController;
+use App\Http\Controllers\ModelUserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\StoreCartController;
+use App\Http\Controllers\ThreedController;
 use App\Http\Controllers\UpModelController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ModelUserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LandingController::class, 'index'])->name('kinetic-gallery');
@@ -46,6 +47,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
     Route::post('/checkout/single/{threed}', [CheckoutController::class, 'processSingle'])->name('checkout.single');
 });
+
+// Rutas para visualización de modelos y comentarios
+Route::get('/model/{id}', [ThreedController::class, 'show'])->name('threed.show');
+Route::post('/model/{id}/comment', [ThreedController::class, 'addComment'])->name('model.comment')->middleware('auth');
 
 // Admin routes
 Route::middleware(['auth', 'role:admin'])

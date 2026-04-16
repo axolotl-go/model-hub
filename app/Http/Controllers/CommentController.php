@@ -9,15 +9,18 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
-    public function store(Request $request, Threed $threed)
+    public function store(Request $request, $threed)
     {
         $validated = $request->validate([
             'comment' => 'required|string|min:3|max:500',
         ]);
 
+        // Buscar el modelo Threed por ID
+        $threedModel = Threed::findOrFail($threed);
+
         Comment::create([
             'user_id' => Auth::id(),
-            'threed_id' => $threed->id,
+            'threed_id' => $threedModel->id,
             'comment' => $validated['comment'],
         ]);
 
