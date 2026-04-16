@@ -2231,13 +2231,10 @@
                 <div class="lg:col-span-7 h-[400px] rounded-2xl overflow-hidden relative group">
                     @if($featured)
                     <a href="{{ route('models.show', $featured) }}" class="block w-full h-full">
-                        <img
-                            alt="{{ $featured->name }}"
-                            class="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
-                            src="{{ $featured->preview_image ? asset('storage/' . $featured->preview_image) : 'https://picsum.photos/seed/' . $featured->id . '/1000/400' }}" />
+                        <x-three-d-view :threed_model="$featured" />
                         {{-- Overlay con info --}}
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none">
                             <p class="text-[10px] text-[#8ff5ff] font-bold uppercase tracking-widest mb-1">
                                 {{ $featured->category->name ?? 'Model' }}
                             </p>
@@ -2294,6 +2291,8 @@
     @if (Route::has('login'))
     <div class="h-14.5 hidden lg:block"></div>
     @endif
+
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 </body>
 
 </html>

@@ -4,8 +4,7 @@
 <a href="{{ route('models.show', $item) }}">
     <div class="group bg-black rounded-2xl overflow-hidden transition-all duration-300 hover:bg-[#25252a]">
         <div class="aspect-square relative overflow-hidden bg-zinc-900">
-            <img alt="{{ $item->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                src="{{ $item->preview_image ? asset('storage/' . $item->preview_image) : 'https://picsum.photos/seed/' . $item->id . '/600/600' }}" />
+            <x-threeDView :model="$item" />
         </div>
 
         <div class="p-5">

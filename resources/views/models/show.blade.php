@@ -2,7 +2,7 @@
 $userCards = auth()->check() ? auth()->user()->cards()->latest()->get() : collect();
 @endphp
 <x-app-layout>
-    <div class="min-w-screen w-full grid grid-cols-1 lg:grid-cols-12 gap-12">
+    <div class="min-w-screen w-full grid grid-cols-1 lg:grid-cols-12 gap-12 p-4">
 
         {{-- ── Left column ── --}}
         <div class="lg:col-span-7 space-y-8">
@@ -24,10 +24,7 @@ $userCards = auth()->check() ? auth()->user()->cards()->latest()->get() : collec
             {{-- Product card --}}
             <div class="bg-zinc-900 border border-zinc-800/60 rounded-2xl overflow-hidden group">
                 <div class="relative w-full h-96 overflow-hidden">
-                    <img src="{{ $threed->preview_image ? asset('storage/' . $threed->preview_image) : 'https://picsum.photos/seed/' . $threed->id . '/600/400' }}"
-                        alt="{{ $threed->name }}"
-                        class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent"></div>
+                    <x-three-d-view :threed_model="$threed" />
                 </div>
             </div>
 
