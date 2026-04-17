@@ -24,7 +24,6 @@ Route::get('/exclusives', [LandingController::class, 'exclusives'])->name('exclu
 Route::get('/free-assets', [LandingController::class, 'freeAssets'])->name('free-assets');
 Route::get('/Kinetic-Gallery', [LandingController::class, 'kineticGallery'])->name('landing');
 
-
 // Carrito rutas
 Route::get('/cart', [StoreCartController::class, 'index'])->middleware(['auth'])->name('cart');
 Route::post('/cart/add/{model}', [StoreCartController::class, 'add'])->middleware(['auth'])->name('cart.add');
@@ -63,10 +62,13 @@ Route::middleware(['auth', 'role:admin'])
         Route::resource('users', UserController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
 
         Route::resource('models', ModelController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+        Route::post('models/{model}/enable', [ModelController::class, 'enable'])->name('models.enable');
+        Route::post('models/{model}/disable', [ModelController::class, 'disable'])->name('models.disable');
 
         Route::resource('categories', CategoryController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
 
-        Route::get('comments', [CommentController::class, 'index'])->name('comments.index');
+        Route::resource('comments', CommentController::class)
+            ->only(['index', 'destroy']);
 
         Route::get('/purchases', [AdminPurchaseController::class, 'index'])->name('purchases.index');
         Route::get('/purchases/{purchase}', [AdminPurchaseController::class, 'show'])->name('purchases.show');
@@ -84,4 +86,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

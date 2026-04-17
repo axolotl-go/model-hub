@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('tags')->nullable();
             $table->timestamps();
+            $table->boolean('enabled')->default(false);
         });
     }
 

@@ -65,17 +65,10 @@
         <div class="bg-zinc-900 border border-zinc-800/60 rounded-xl p-6 mt-8">
             <h3 class="text-lg font-bold text-white mb-6">Product Details</h3>
 
-            <div class="flex items-start space-x-6">
+            <div class="flex items-start">
                 <!-- Product Image -->
-                <div class="flex-shrink-0">
-                    @if($purchase->threed->preview_image)
-                        <img src="{{ $purchase->threed->preview_image }}" alt="{{ $purchase->threed->name }}"
-                            class="w-32 h-32 object-cover rounded-lg border border-zinc-800">
-                    @else
-                        <div class="w-32 h-32 bg-zinc-800 rounded-lg flex items-center justify-center">
-                            <span class="material-symbols-outlined text-zinc-400 text-3xl">image</span>
-                        </div>
-                    @endif
+                <div class="flex flex-1 justify-center">
+                    <x-three-d-view :model="$purchase->threed" />
                 </div>
 
                 <!-- Product Info -->
