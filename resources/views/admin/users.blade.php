@@ -63,7 +63,7 @@
                                         </td>
                                         <td class="px-6 py-4">
                                             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold
-                                                        {{ $user->role === 'admin'
+                                                                                                        {{ $user->role === 'admin'
                             ? 'bg-red-500/10 text-red-400 border border-red-500/20'
                             : 'bg-blue-500/10 text-blue-400 border border-blue-500/20' }}">
                                                 {{ ucfirst($user->role) }}
@@ -74,16 +74,7 @@
                                             <p class="text-xs text-zinc-600">{{ $user->created_at->diffForHumans() }}</p>
                                         </td>
                                         <td class="px-6 py-4">
-                                            <div class="flex items-center justify-end gap-2">
-                                                <a href="{{ route('admin.users.edit', $user) }}"
-                                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white text-xs font-medium rounded-lg transition-colors">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                        stroke-width="1.5" stroke="currentColor" class="size-3.5">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Z" />
-                                                    </svg>
-                                                    Edit
-                                                </a>
+                                            <div class="flex items-center justify-center">
                                                 @if($user->id !== auth()->id())
                                                     <form action="{{ route('admin.users.destroy', $user) }}" method="POST"
                                                         onsubmit="return confirm('Delete {{ $user->name }}? This cannot be undone.')">

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Threed;
 use App\Models\Comment;
 use App\Models\Purchase;
 use App\Models\StoreCart;
+use App\Models\Threed;
+use Illuminate\Http\Request;
 
 class ThreedController extends Controller
 {
@@ -15,7 +14,7 @@ class ThreedController extends Controller
     {
         $threed = Threed::with(['category', 'user', 'comments.user'])->findOrFail($id);
         $comments = $threed->comments()->with('user')->latest()->get();
-        
+
         // Verificar si el usuario ya compró este modelo
         $isPurchased = false;
         if (auth()->check()) {
@@ -23,7 +22,7 @@ class ThreedController extends Controller
                 ->where('threed_id', $id)
                 ->exists();
         }
-        
+
         // Verificar si el modelo está en el carrito del usuario
         $isInCart = false;
         if (auth()->check()) {
@@ -31,24 +30,24 @@ class ThreedController extends Controller
                 ->where('threed_id', $id)
                 ->exists();
         }
-        
+
         return view('Threed.threed', compact('threed', 'comments', 'isPurchased', 'isInCart'));
     }
-    
+
     public function addComment(Request $request, $id)
     {
         $request->validate([
             'comment' => 'required|string|max:1000',
         ]);
-        
+
         $threed = Threed::findOrFail($id);
-        
+
         Comment::create([
             'user_id' => auth()->id(),
             'threed_id' => $id,
             'comment' => $request->comment,
         ]);
-        
+
         return back()->with('success', 'Comment added successfully!');
     }
 }
