@@ -123,10 +123,6 @@
                             <span>Subtotal</span>
                             <span>${{ $subtotal }}</span>
                         </div>
-                        <div class="flex justify-between text-emerald-400 font-medium">
-                            <span>Discount</span>
-                            <span>-${{ $discount }}</span>
-                        </div>
                         <div class="border-t border-zinc-800/60 pt-3 flex justify-between text-white font-bold text-base">
                             <span>Total</span>
                             <span>${{ $total }}</span>

@@ -66,6 +66,8 @@ Route::middleware(['auth', 'role:admin'])
 
         Route::resource('categories', CategoryController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
 
+        Route::get('comments', [CommentController::class, 'index'])->name('comments.index');
+
         Route::get('/purchases', [AdminPurchaseController::class, 'index'])->name('purchases.index');
         Route::get('/purchases/{purchase}', [AdminPurchaseController::class, 'show'])->name('purchases.show');
 

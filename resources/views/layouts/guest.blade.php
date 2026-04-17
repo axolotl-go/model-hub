@@ -17,14 +17,15 @@
 </head>
 
 <body class="font-sans text-white antialiased bg-zinc-950">
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-zinc-200">
+    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-zinc-900">
         <div>
             <a href="/">
                 <x-application-logo />
             </a>
         </div>
 
-        <div class="w-full sm:max-w-md mt-6 px-8 py-10 rounded-2xl p-2 bg-zinc-950 border border-zinc-800/50 shadow-2xl shadow-black/50 overflow-hidden sm:rounded-2xl">
+        <div
+            class="w-full sm:max-w-md mt-6 px-8 py-10 rounded-2xl p-2 bg-zinc-950 border border-zinc-800/50 shadow-2xl shadow-black/50 overflow-hidden sm:rounded-2xl">
             {{ $slot }}
         </div>
     </div>

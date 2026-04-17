@@ -3,79 +3,58 @@
         {{-- Header --}}
         <div class="flex items-center justify-between">
             <div>
-                <h2 class="text-2xl font-bold text-white">Users Management</h2>
-                <p class="text-sm text-zinc-500 mt-1">
-                    {{ $users->total() }} {{ Str::plural('user', $users->total()) }} registered
-                </p>
+                <h2 class="text-2xl font-bold text-white">Comments Management</h2>
             </div>
-            <a href="{{ route('admin.users.create') }}"
-                class="flex items-center gap-2 px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-black text-sm font-bold rounded-lg transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                    stroke="currentColor" class="size-4">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                </svg>
-                Create User
-            </a>
         </div>
-
-        @if (session('success'))
-            <div
-                class="flex items-center gap-3 px-4 py-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg text-emerald-400 text-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-5 flex-shrink-0">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                </svg>
-                {{ session('success') }}
-            </div>
-        @endif
-
-        @if($users->count())
-            <div class="overflow-x-auto bg-zinc-900 rounded-xl border border-zinc-800/60">
-                <table class="w-full">
-                    <thead class="border-b border-zinc-800/60">
-                        <tr class="text-left text-xs font-bold uppercase tracking-widest text-zinc-500">
-                            <th class="px-6 py-4">#</th>
-                            <th class="px-6 py-4">User</th>
-                            <th class="px-6 py-4">Role</th>
-                            <th class="px-6 py-4">Joined</th>
-                            <th class="px-6 py-4 text-right">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-zinc-800/40">
-                        @foreach($users as $user)
+        @if($comments->count() > 0)
+            @foreach ($models as $model)
+                <div class="overflow-x-auto bg-zinc-900 rounded-xl border border-zinc-800/60">
+                    <table class="w-full">
+                        <thead class="border-b border-zinc-800/60">
+                            <tr class="text-left text-xs font-bold uppercase tracking-widest text-zinc-500">
+                                <th class="px-6 py-4">#</th>
+                                <th class="px-6 py-4">User</th>
+                                <th class="px-6 py-4">Role</th>
+                                <th class="px-6 py-4">Joined</th>
+                                <th class="px-6 py-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-zinc-800/40">
+                            @foreach($model->comments as $comment)
                                     <tr class="hover:bg-zinc-800/40 transition-colors group">
                                         <td class="px-6 py-4">
-                                            <span class="text-xs text-zinc-600">{{ $user->id }}</span>
+                                            <span class="text-xs text-zinc-600">{{ $comment->id }}</span>
                                         </td>
                                         <td class="px-6 py-4">
                                             <div class="flex items-center gap-3">
                                                 <div
                                                     class="w-9 h-9 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center flex-shrink-0">
                                                     <span class="text-xs font-bold text-zinc-300">
-                                                        {{ strtoupper(substr($user->name, 0, 1)) }}
+                                                        {{ strtoupper(substr($comment->user->name, 0, 1)) }}
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <p class="font-medium text-white text-sm leading-tight">{{ $user->name }}</p>
-                                                    <p class="text-xs text-zinc-500">{{ $user->email }}</p>
+                                                    <p class="font-medium text-white text-sm leading-tight">{{ $comment->user->name }}
+                                                    </p>
+                                                    <p class="text-xs text-zinc-500">{{ $comment->user->email }}</p>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="px-6 py-4">
                                             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold
-                                                        {{ $user->role === 'admin'
-                            ? 'bg-red-500/10 text-red-400 border border-red-500/20'
-                            : 'bg-blue-500/10 text-blue-400 border border-blue-500/20' }}">
-                                                {{ ucfirst($user->role) }}
+                                                                                                                                                                                                                                                                                        {{ $comment->user->role === 'admin'
+                                ? 'bg-red-500/10 text-red-400 border border-red-500/20'
+                                : 'bg-blue-500/10 text-blue-400 border border-blue-500/20' }}">
+                                                {{ ucfirst($comment->user->role) }}
                                             </span>
                                         </td>
                                         <td class="px-6 py-4">
-                                            <p class="text-sm text-zinc-400">{{ $user->created_at->format('M d, Y') }}</p>
-                                            <p class="text-xs text-zinc-600">{{ $user->created_at->diffForHumans() }}</p>
+                                            <p class="text-sm text-zinc-400">{{ $comment->created_at->format('M d, Y') }}</p>
+                                            <p class="text-xs text-zinc-600">{{ $comment->created_at->diffForHumans() }}</p>
                                         </td>
                                         <td class="px-6 py-4">
                                             <div class="flex items-center justify-end gap-2">
-                                                <a href="{{ route('admin.users.edit', $user) }}"
+                                                <a href="{{ route('admin.users.edit', $comment->user) }}"
                                                     class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white text-xs font-medium rounded-lg transition-colors">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                         stroke-width="1.5" stroke="currentColor" class="size-3.5">
@@ -84,9 +63,9 @@
                                                     </svg>
                                                     Edit
                                                 </a>
-                                                @if($user->id !== auth()->id())
-                                                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST"
-                                                        onsubmit="return confirm('Delete {{ $user->name }}? This cannot be undone.')">
+                                                @if($comment->user->id !== auth()->id())
+                                                    <form action="{{ route('admin.users.destroy', $comment->user) }}" method="POST"
+                                                        onsubmit="return confirm('Delete {{ $comment->user->name }}? This cannot be undone.')">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit"
@@ -105,24 +84,21 @@
                                             </div>
                                         </td>
                                     </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-
-            {{-- Pagination --}}
-            <div class="flex justify-end">
-                {{ $users->links() }}
-            </div>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @endforeach
         @else
-            <div class="flex flex-col items-center justify-center py-20 text-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1"
-                    stroke="currentColor" class="size-12 text-zinc-700 mb-4">
+            <div class="flex flex-col items-center justify-center py-20 text-zinc-700 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                        d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
                 </svg>
-                <p class="text-zinc-500 font-medium">No users found</p>
-                <p class="text-zinc-600 text-sm mt-1">Create the first user to get started</p>
+
+                <p class="text-zinc-500 font-medium">No comments yet</p>
+                <p class="text-zinc-600 text-sm mt-1">Comments will appear here once users make comments</p>
             </div>
         @endif
     </div>

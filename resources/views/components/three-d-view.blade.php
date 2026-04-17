@@ -1,25 +1,20 @@
 <div class="w-full h-full">
-    @if($isValid && $modelPath)
-    {{-- GLB: visor 3D interactivo --}}
-    <model-viewer
-        src="{{ asset('storage/' . $modelPath) }}"
-        auto-rotate
-        camera-controls
-        style="width: 100%; height: 100%; min-height: 240px; background: transparent;">
-    </model-viewer>
-    @elseif($previewImage)
-    {{-- Otro formato: mostrar imagen preview --}}
-    <img src="{{ asset('storage/' . $previewImage) }}"
-        class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
-        alt="Model preview" />
-    <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+    @if($isFbx)
+        <div class="three-container w-full h-full" data-model="{{ asset('storage/' . $modelPath) }}"
+            style="min-height:240px;">
+        </div>
     @else
-    {{-- Sin preview --}}
-    <div class="flex flex-col items-center justify-center w-full h-full bg-zinc-800 text-zinc-600 gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-10">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
-        </svg>
-        <span class="text-xs uppercase tracking-widest">Sin vista previa</span>
-    </div>
+        <div class="w-full h-full flex flex-col items-center justify-center min-h-[240px] bg-zinc-950 rounded-lg">
+            @if($previewImage)
+                <img src="{{ asset('storage/' . $previewImage) }}" alt="Vista previa del modelo" class="max-w-full max-h-full object-contain rounded-lg">
+            @else
+                <div class="text-zinc-500 flex flex-col items-center gap-2">
+                    <svg class="w-8 h-8 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <span class="text-sm">Vista previa no disponible</span>
+                </div>
+            @endif
+        </div>
     @endif
 </div>

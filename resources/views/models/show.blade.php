@@ -24,7 +24,7 @@ $userCards = auth()->check() ? auth()->user()->cards()->latest()->get() : collec
             {{-- Product card --}}
             <div class="bg-zinc-900 border border-zinc-800/60 rounded-2xl overflow-hidden group">
                 <div class="relative w-full h-96 overflow-hidden">
-                    <x-three-d-view :threed_model="$threed" />
+                        <x-three-d-view :model="$threed" />
                 </div>
             </div>
 
@@ -113,15 +113,6 @@ $userCards = auth()->check() ? auth()->user()->cards()->latest()->get() : collec
                         </svg>
                         You own this model
                     </div>
-                    <a href="#"
-                        class="w-full bg-zinc-800 hover:bg-zinc-700 text-white py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-4">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                        </svg>
-                        Download Now
-                    </a>
                     @else
                     @auth
                     @if($isInCart)
