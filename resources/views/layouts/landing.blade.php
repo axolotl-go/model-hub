@@ -85,23 +85,7 @@
 
                 <div class="lg:col-span-7 h-[400px] rounded-2xl overflow-hidden relative group">
                     @if($featured)
-                        <a href="{{ route('models.show', $featured) }}" class="block w-full h-full">
-                            <x-three-d-view :model="$featured" />
-                            {{-- Overlay con info --}}
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                            </div>
-                            <div
-                                class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none">
-                                <p class="text-[10px] text-[#8ff5ff] font-bold uppercase tracking-widest mb-1">
-                                    {{ $featured->category->name ?? 'Model' }}
-                                </p>
-                                <h3 class="text-white font-bold text-xl truncate">{{ $featured->name }}</h3>
-                                <p class="text-zinc-400 text-sm mt-1">
-                                    {{ $featured->price > 0 ? '$' . number_format($featured->price, 2) : 'Free' }}
-                                </p>
-                            </div>
-                        </a>
+                        <x-card-model :item="$featured" class="aspect-auto" />
                     @else
                         <div class="w-full h-full bg-zinc-900 flex items-center justify-center">
                             <p class="text-zinc-600 text-sm">No featured model available</p>
@@ -122,7 +106,7 @@
             {{-- Botones de categoría --}}
             @foreach($categories as $category)
                     <a href="{{ route('landing', ['category' => $category->id]) }}" class="px-6 py-2 rounded-lg font-bold text-sm transition-colors
-                                      {{ isset($activeCategory) && $activeCategory == $category->id
+                                                                                              {{ isset($activeCategory) && $activeCategory == $category->id
                 ? 'bg-[#7000ff] text-white'
                 : 'text-zinc-500 hover:text-zinc-200' }}">
                         {{ $category->name }}
@@ -133,7 +117,8 @@
         @isset($activeCategory)
             @if($activeCategory)
                 <p class="text-zinc-500 text-sm">
-                    Mostrando <span class="text-white font-bold">{{ $threeds->count() }}</span> modelos
+                    Mostrando <span class="text-white font-bold">{{ $threeds->where('enabled', true)->count() }}</span>
+                    modelos
                 </p>
             @endif
         @endisset

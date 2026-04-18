@@ -13,8 +13,8 @@
 <aside class="h-screen fixed top-0 left-0 w-64 bg-zinc-900 border-r border-zinc-800/50 flex flex-col py-6 z-50">
     {{-- Brand --}}
     <div class="px-6 mb-8">
-        <a href="{{ route('admin.dashboard') }}" class="block">
-            <h1 class="text-xl font-black text-white tracking-tighter">ModelHub</h1>
+        <a href="{{ route('kinetic-gallery') }}" class="block">
+            <x-application-logo class="w-10 h-10" />
             <p class="text-xs text-zinc-500 uppercase tracking-widest mt-0.5">Admin Panel</p>
         </a>
     </div>
@@ -26,7 +26,7 @@
                 $isActive = str_starts_with($currentRoute ?? '', rtrim($item['route'], '.index'));
             @endphp
             <a href="{{ $item['href'] }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200
-                                              {{ $isActive
+                                                              {{ $isActive
             ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20'
             : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/70' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

@@ -1,3 +1,3 @@
 <span class="text-xl font-bold text-zinc-100 tracking-tighter">
-    Kinetic <span class="text-cyan-400">Gallery</span>
+    Model <span class="text-cyan-400">Hub</span>
 </span>
