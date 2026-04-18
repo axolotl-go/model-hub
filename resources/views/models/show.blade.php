@@ -92,7 +92,7 @@ $userCards = auth()->check() ? auth()->user()->cards()->latest()->get() : collec
                         @if($threed->price == 0)
                         <p class="text-4xl font-black text-emerald-400 mt-1">FREE</p>
                         @else
-                        <p class="text-4xl font-black text-cyan-400 mt-1">${{ number_format($threed->price, 2) }}</p>
+                        <p class="text-4xl font-black text-green-400 mt-1">${{ number_format($threed->price, 2) }}</p>
                         @endif
                     </div>
                     <div class="text-right">

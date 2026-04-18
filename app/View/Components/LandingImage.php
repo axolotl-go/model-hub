@@ -6,14 +6,16 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class ViewModelThree extends Component
+class LandingImage extends Component
 {
+    public $src;
+
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($src)
     {
-        //
+        $this->src = $src;
     }
 
     /**
@@ -21,6 +23,6 @@ class ViewModelThree extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.view-model-three');
+        return view('components.landing-image');
     }
 }

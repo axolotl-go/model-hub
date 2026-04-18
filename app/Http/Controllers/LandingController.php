@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Threed;
 use App\Models\Category;
+use App\Models\Threed;
+use Illuminate\Http\Request;
 
 class LandingController extends Controller
 {
     public function AllCategories()
     {
         $categories = Category::all();
+
         return $categories;
     }
 
@@ -33,7 +33,7 @@ class LandingController extends Controller
         $featured = Threed::whereNotNull('preview_image')->inRandomOrder()->first()
             ?? Threed::inRandomOrder()->first();
 
-        $threeds = $query->take(24)->get();
+        $threeds = $query->get();
         $categories = $this->AllCategories();
 
         return view('Landing.welcome', compact('threeds', 'categories', 'Browse', 'Exclusives', 'FreeAssets', 'activeCategory', 'featured'));
@@ -46,11 +46,12 @@ class LandingController extends Controller
         $FreeAssets = 'text-zinc-400 hover:text-zinc-100 transition-colors';
 
         // 6 modelos aleatorios para la sección Featured
-        $featured = \App\Models\Threed::inRandomOrder()->take(6)->get();
+        $featured = Threed::inRandomOrder()->take(6)->get();
+        $threeds = Threed::all()->collect();
+        $categories = $this->AllCategories();
 
         return view('Landing.Landing', compact('Browse', 'Exclusives', 'FreeAssets', 'featured'));
     }
-
 
     public function freeAssets()
     {
@@ -60,6 +61,7 @@ class LandingController extends Controller
 
         $threeds = Threed::where('price', 0)->latest()->take(12)->get();
         $categories = $this->AllCategories();
+
         return view('Landing.welcome', compact('threeds', 'categories', 'Browse', 'Exclusives', 'FreeAssets'));
     }
 }

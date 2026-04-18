@@ -47,10 +47,9 @@
                                 <table class="w-full">
                                     <thead class="border-b border-zinc-800/60">
                                         <tr class="text-left text-xs font-bold uppercase tracking-widest text-zinc-500">
-                                            <th class="px-6 py-4">#</th>
+                                            <th class="px-6 py-4">Comment</th>
                                             <th class="px-6 py-4">User</th>
                                             <th class="px-6 py-4">Role</th>
-                                            <th class="px-6 py-4">Comment</th>
                                             <th class="px-6 py-4">Date</th>
                                             <th class="px-6 py-4">Actions</th>
                                         </tr>
@@ -59,7 +58,12 @@
                                         @foreach($comments as $comment)
                                                             <tr class="hover:bg-zinc-800/40 transition-colors group">
                                                                 <td class="px-6 py-4">
-                                                                    <span class="text-xs text-zinc-600">{{ $comment->id }}</span>
+                                                                    <div
+                                                                        class="rounded-md bg-zinc-800 border border-zinc-700 flex items-center flex-shrink-0">
+                                                                        <span class="text-xs font-bold text-zinc-300 p-2">
+                                                                            {{ $comment->comment }}
+                                                                        </span>
+                                                                    </div>
                                                                 </td>
                                                                 <td class="px-6 py-4">
                                                                     <div class="flex items-center gap-3">
@@ -73,18 +77,11 @@
                                                                 </td>
                                                                 <td class="px-6 py-4">
                                                                     <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {{ $comment->user->role === 'admin'
+{{ $comment->user->role === 'admin'
                                             ? 'bg-red-500/10 text-red-400 border border-red-500/20'
                                             : 'bg-blue-500/10 text-blue-400 border border-blue-500/20' }}">
                                                                         {{ ucfirst($comment->user->role) }}
                                                                     </span>
-                                                                </td>
-                                                                <td>
-                                                                    <div>
-                                                                        <p class="font-medium text-white text-sm leading-tight">
-                                                                            {{ $comment->comment }}
-                                                                        </p>
-                                                                    </div>
                                                                 </td>
                                                                 <td class="px-6 py-4">
                                                                     <p class="text-sm text-zinc-400">{{ $comment->created_at->format('M d, Y') }}

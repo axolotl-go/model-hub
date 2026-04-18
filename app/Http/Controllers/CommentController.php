@@ -29,8 +29,6 @@ class CommentController extends Controller
 
     public function destroy(Comment $comment)
     {
-        // $this->authorize('delete', $comment);
-        $modelId = $comment->threed_id;
         $comment->delete();
 
         return redirect()->back()->with('success', 'Comment deleted');
