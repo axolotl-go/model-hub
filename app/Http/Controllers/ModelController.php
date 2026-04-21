@@ -34,7 +34,7 @@ class ModelController extends Controller
             'price' => ['required', 'numeric', 'min:0'],
             'category_id' => ['required', 'exists:categories,id'],
             'tags' => ['nullable', 'string'],
-            'preview_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:2048'],
+            'preview_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp'],
         ]);
 
         // La regla 'mimes' no reconoce fbx/obj/stl/gltf — validamos la extensión manualmente
@@ -65,7 +65,7 @@ class ModelController extends Controller
             'category_id' => $request->input('category_id'),
             'tags' => $request->input('tags'),
             'preview_image' => $previewImage,
-            'user_id' => auth()->id,
+            'user_id' => auth()->id(),
             'enabled'=> false,
         ]);
 

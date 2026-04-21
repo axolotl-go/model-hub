@@ -80,8 +80,10 @@
                             <input type="file" name="file_path" accept=".obj,.gltf,.glb,.fbx,.stl"
                                 class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
                                 required>
-                            <p class="text-xs text-zinc-400 mt-1">FBX. Max 20MB</p>
-                            @error('file_path')
+
+                            <p class="text-xs text-zinc-400 mt-1">
+                                OBJ, GLTF, GLB, FBX, STL. Max 3MB
+                            </p>@error('file_path')
                                 <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>

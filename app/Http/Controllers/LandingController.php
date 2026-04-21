@@ -45,12 +45,22 @@ class LandingController extends Controller
         $Exclusives = 'text-zinc-400 hover:text-zinc-100 transition-colors';
         $FreeAssets = 'text-zinc-400 hover:text-zinc-100 transition-colors';
 
-        // 6 modelos aleatorios para la sección Featured
-        $featured = Threed::inRandomOrder()->take(6)->get();
-        $threeds = Threed::all()->collect();
+        // Solo visibles + random
+        $featured = Threed::query()
+            ->where('enabled', true)
+            ->inRandomOrder()
+            ->take(6)
+            ->get();
+
         $categories = $this->AllCategories();
 
-        return view('Landing.Landing', compact('Browse', 'Exclusives', 'FreeAssets', 'featured'));
+        return view('Landing.Landing', compact(
+            'Browse',
+            'Exclusives',
+            'FreeAssets',
+            'featured',
+            'categories'
+        ));
     }
 
     public function freeAssets()
