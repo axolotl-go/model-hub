@@ -10,6 +10,17 @@ use Illuminate\Http\Request;
 
 class ThreedController extends Controller
 {
+
+    public function index()
+    {
+        $threeds = Threed::query()
+            ->where('enabled', true)
+            ->latest()
+            ->get();
+
+        return view('Landing.welcome', compact('threeds'));
+    }
+
     public function show($id)
     {
         $threed = Threed::with(['category', 'user', 'comments.user'])->findOrFail($id);
