@@ -55,7 +55,8 @@
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-zinc-800/40">
-                                        @foreach($comments as $comment)
+                                        @foreach($comments->where('threed_id', $model->id) as $comment)
+                                            
                                                             <tr class="hover:bg-zinc-800/40 transition-colors group">
                                                                 <td class="px-6 py-4">
                                                                     <div
