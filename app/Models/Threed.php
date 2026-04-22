@@ -18,6 +18,7 @@ class Threed extends Model
         'file_path',
         'preview_image',
         'user_id',
+        'enabled',
     ];
 
     public function category()

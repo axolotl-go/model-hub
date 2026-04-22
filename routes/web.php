@@ -19,6 +19,7 @@ use App\Http\Controllers\UpModelController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/', [LandingController::class, 'index'])->name('kinetic-gallery');
 Route::get('/exclusives', [LandingController::class, 'exclusives'])->name('exclusives');
 Route::get('/free-assets', [LandingController::class, 'freeAssets'])->name('free-assets');
@@ -74,8 +75,6 @@ Route::middleware(['auth', 'role:admin'])
         Route::get('/purchases/{purchase}', [AdminPurchaseController::class, 'show'])->name('purchases.show');
 
         Route::get('/sales', [SalesController::class, 'index'])->name('sales.index');
-
-        Route::resource('upModel', UpModelController::class)->only(['index']);
     });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');

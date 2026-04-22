@@ -85,7 +85,7 @@
 
                 <div class="lg:col-span-7 h-[400px] rounded-2xl overflow-hidden relative group">
                     @if($featured)
-                        <x-card-model :item="$featured" class="aspect-auto" />
+                        <x-card-model :item="$featured" />
                     @else
                         <div class="w-full h-full bg-zinc-900 flex items-center justify-center">
                             <p class="text-zinc-600 text-sm">No featured model available</p>
@@ -106,7 +106,7 @@
             {{-- Botones de categoría --}}
             @foreach($categories as $category)
                     <a href="{{ route('landing', ['category' => $category->id]) }}" class="px-6 py-2 rounded-lg font-bold text-sm transition-colors
-                                                                                              {{ isset($activeCategory) && $activeCategory == $category->id
+                                                                                                                                      {{ isset($activeCategory) && $activeCategory == $category->id
                 ? 'bg-[#7000ff] text-white'
                 : 'text-zinc-500 hover:text-zinc-200' }}">
                         {{ $category->name }}
