@@ -30,7 +30,7 @@ class ModelController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
-            'file_path' => ['required', 'file', 'max:409600'],   // 400 MB máx
+            'file_path' => ['required', 'file', 'max:204800'],   // 200 MB máx
             'price' => ['required', 'numeric', 'min:0'],
             'category_id' => ['required', 'exists:categories,id'],
             'tags' => ['nullable', 'string'],
@@ -65,8 +65,7 @@ class ModelController extends Controller
             'category_id' => $request->input('category_id'),
             'tags' => $request->input('tags'),
             'preview_image' => $previewImage,
-            'user_id' => auth()->user->id,
-            'enabled' => false,
+            'user_id' => auth()->id(),
         ]);
 
         return redirect()->route('admin.models.index')->with('success', 'Model created successfully');
@@ -88,7 +87,7 @@ class ModelController extends Controller
             'category_id' => 'required|exists:categories,id',
             'tags' => 'nullable|string',
             'preview_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:2048'],
-            'file_path' => ['nullable', 'file', 'max:204800'],
+            'file_path' => ['nullable', 'file', 'max:120M'],
         ]);
 
         $model->update([
@@ -134,7 +133,6 @@ class ModelController extends Controller
     {
         $model->enabled = true;
         $model->save();
-
         return redirect()->back()->with('success', 'Model enabled successfully');
     }
 

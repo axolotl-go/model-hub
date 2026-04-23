@@ -5,9 +5,7 @@
     @else
         @foreach($threeds as $model)
             @if($model->enabled)
-                <div class="aspect-square">
-                    <x-card-model :item="$model" />
-                </div>
+                <x-card-model :item="$model" class="aspect-square" />
             @endif
         @endforeach
     @endif

@@ -15,7 +15,6 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\StoreCartController;
 use App\Http\Controllers\ThreedController;
-use App\Http\Controllers\UpModelController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -75,6 +74,8 @@ Route::middleware(['auth', 'role:admin'])
         Route::get('/purchases/{purchase}', [AdminPurchaseController::class, 'show'])->name('purchases.show');
 
         Route::get('/sales', [SalesController::class, 'index'])->name('sales.index');
+
+        Route::resource('upModel', UpModelController::class)->only(['index']);
     });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
