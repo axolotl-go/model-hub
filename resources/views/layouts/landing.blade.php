@@ -84,13 +84,7 @@
                 </div>
 
                 <div class="lg:col-span-7 h-[400px] rounded-2xl overflow-hidden relative group">
-                    @if($featured)
-                        <x-card-model :item="$featured" class="aspect-auto" />
-                    @else
-                        <div class="w-full h-full bg-zinc-900 flex items-center justify-center">
-                            <p class="text-zinc-600 text-sm">No featured model available</p>
-                        </div>
-                    @endif
+                    <x-card-model :item="$featured" />
                 </div>
     </div>
     </header>
@@ -106,7 +100,7 @@
             {{-- Botones de categoría --}}
             @foreach($categories as $category)
                     <a href="{{ route('landing', ['category' => $category->id]) }}" class="px-6 py-2 rounded-lg font-bold text-sm transition-colors
-                                                                                              {{ isset($activeCategory) && $activeCategory == $category->id
+                                                                                                                                                                                      {{ isset($activeCategory) && $activeCategory == $category->id
                 ? 'bg-[#7000ff] text-white'
                 : 'text-zinc-500 hover:text-zinc-200' }}">
                         {{ $category->name }}
@@ -117,7 +111,7 @@
         @isset($activeCategory)
             @if($activeCategory)
                 <p class="text-zinc-500 text-sm">
-                    Mostrando <span class="text-white font-bold">{{ $threeds->where('enabled', true)->count() }}</span>
+                    Mostrando <span class="text-white font-bold">{{ $threeds->count() }}</span>
                     modelos
                 </p>
             @endif

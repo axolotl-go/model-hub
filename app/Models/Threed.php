@@ -18,11 +18,6 @@ class Threed extends Model
         'file_path',
         'preview_image',
         'user_id',
-        'enabled',
-    ];
-
-    protected $casts = [
-        'enabled' => 'boolean',
     ];
 
     public function category()

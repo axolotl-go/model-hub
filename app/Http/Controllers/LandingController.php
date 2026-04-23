@@ -21,17 +21,19 @@ class LandingController extends Controller
         $Exclusives = 'text-zinc-400 hover:text-zinc-100 transition-colors';
         $FreeAssets = 'text-zinc-400 hover:text-zinc-100 transition-colors';
 
-        $query = Threed::latest();
+        $query = Threed::with('category')->where('enabled', true)->latest();
 
-        // Filtrar por categoría si viene el parámetro
         $activeCategory = $request->query('category');
         if ($activeCategory) {
             $query->where('category_id', $activeCategory);
         }
 
-        // Modelo random para el hero (con preview_image preferiblemente)
-        $featured = Threed::whereNotNull('preview_image')->inRandomOrder()->first()
-            ?? Threed::inRandomOrder()->first();
+        // Modelo random para el hero
+        $featured = Threed::where('enabled', true)
+            ->whereNotNull('preview_image')
+            ->inRandomOrder()
+            ->first()
+            ?? Threed::where('enabled', true)->inRandomOrder()->first();
 
         $threeds = $query->get();
         $categories = $this->AllCategories();
@@ -41,27 +43,14 @@ class LandingController extends Controller
 
     public function index()
     {
-        $Browse = 'text-zinc-400 hover:text-zinc-100 transition-colors';
-        $Exclusives = 'text-zinc-400 hover:text-zinc-100 transition-colors';
-        $FreeAssets = 'text-zinc-400 hover:text-zinc-100 transition-colors';
+        
 
         // 6 modelos aleatorios para la sección Featured
-        $featured = Threed::inRandomOrder()->take(6)->get();
-        $threeds = Threed::all()->collect();
+        $featured = Threed::with('category')->where('enabled', true)->inRandomOrder()->first();
+        $threeds = Threed::with('category')->where('enabled', true)->latest()->get();
         $categories = $this->AllCategories();
 
-        return view('Landing.Landing', compact('Browse', 'Exclusives', 'FreeAssets', 'featured'));
+        return view('Landing.Landing', compact('featured', 'categories', 'threeds'));
     }
 
-    public function freeAssets()
-    {
-        $Browse = 'text-zinc-400 hover:text-zinc-100 transition-colors';
-        $Exclusives = 'text-zinc-400 hover:text-zinc-100 transition-colors';
-        $FreeAssets = 'text-cyan-400 border-b-2 border-violet-500 pb-1';
-
-        $threeds = Threed::where('price', 0)->latest()->take(12)->get();
-        $categories = $this->AllCategories();
-
-        return view('Landing.welcome', compact('threeds', 'categories', 'Browse', 'Exclusives', 'FreeAssets'));
-    }
 }
