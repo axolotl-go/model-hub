@@ -43,12 +43,11 @@ class LandingController extends Controller
 
     public function index()
     {
-        
 
+        $categories = Category::all();
         // 6 modelos aleatorios para la sección Featured
         $featured = Threed::with('category')->where('enabled', true)->inRandomOrder()->first();
         $threeds = Threed::with('category')->where('enabled', true)->latest()->get();
-        $categories = $this->AllCategories();
 
         return view('Landing.Landing', compact('featured', 'categories', 'threeds'));
     }
