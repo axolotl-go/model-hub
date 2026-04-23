@@ -4,9 +4,7 @@
         <p class="text-zinc-500 text-sm">No models found</p>
     @else
         @foreach($threeds as $model)
-            @if($model->enabled)
-                <x-card-model :item="$model" class="aspect-square" />
-            @endif
+            <x-card-model :item="$model" class="aspect-square" />
         @endforeach
     @endif
 @endsection

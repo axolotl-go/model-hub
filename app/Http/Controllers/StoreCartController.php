@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\StoreCart;
 use App\Models\Threed;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class StoreCartController extends Controller
@@ -13,35 +11,50 @@ class StoreCartController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $cartItems = $user->getCartItems();
+        $cartItems = $user->getCartItems()->load('threed');
+
+        // Purge disabled models from cart and notify the user
+        $disabled = $cartItems->filter(fn ($item) => ! $item->threed->enabled);
+
+        if ($disabled->isNotEmpty()) {
+            StoreCart::whereIn('id', $disabled->pluck('id'))->delete();
+            $cartItems = $cartItems->reject(fn ($item) => ! $item->threed->enabled);
+
+            session()->flash(
+                'cart_purged',
+                $disabled->count() === 1
+                    ? "'{$disabled->first()->threed->name}' fue eliminado del carrito porque fue deshabilitado."
+                    : "{$disabled->count()} modelos fueron eliminados de tu carrito porque fueron deshabilitados."
+            );
+        }
 
         $cartItemsFormatted = $cartItems->map(function ($item) {
             $img = $item->threed->preview_image
-                ? asset('storage/' . $item->threed->preview_image)
-                : 'https://picsum.photos/seed/' . $item->threed->id . '/200/200';
+                ? asset('storage/'.$item->threed->preview_image)
+                : 'https://picsum.photos/seed/'.$item->threed->id.'/200/200';
 
             return [
-                'cart_id'     => $item->id,
-                'id'          => $item->threed->id,
-                'name'        => $item->threed->name,
+                'cart_id' => $item->id,
+                'id' => $item->threed->id,
+                'name' => $item->threed->name,
                 'description' => $item->threed->description,
-                'tag'         => $item->threed->tags,
-                'color'       => 'text-cyan-400',
-                'price'       => $item->threed->price,
-                'img'         => $img,
+                'tag' => $item->threed->tags,
+                'color' => 'text-cyan-400',
+                'price' => $item->threed->price,
+                'img' => $img,
             ];
         })->toArray();
 
         $subtotal = array_sum(array_column($cartItemsFormatted, 'price'));
-        $total    = $subtotal;
+        $total = $subtotal;
 
         $cards = $user->cards()->latest()->get();
 
         return view('StoreCart', [
             'cartItems' => collect($cartItemsFormatted),
-            'subtotal'  => $subtotal,
-            'total'     => $total,
-            'cards'     => $cards,
+            'subtotal' => $subtotal,
+            'total' => $total,
+            'cards' => $cards,
         ]);
     }
 
@@ -53,14 +66,14 @@ class StoreCartController extends Controller
             ->where('threed_id', $model->id)
             ->exists();
 
-        if (!$exists) {
+        if (! $exists) {
             StoreCart::create([
                 'user_id' => $user->id,
                 'threed_id' => $model->id,
             ]);
         }
 
-        return back()->with('success', $model->name . ' added to cart');
+        return back()->with('success', $model->name.' added to cart');
     }
 
     public function remove($cartItemId)
@@ -77,6 +90,7 @@ class StoreCartController extends Controller
     {
         $user = Auth::user();
         StoreCart::where('user_id', $user->id)->delete();
+
         return redirect()->route('cart')->with('success', 'Cart cleared');
     }
 }

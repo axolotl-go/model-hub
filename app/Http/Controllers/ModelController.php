@@ -87,7 +87,7 @@ class ModelController extends Controller
             'category_id' => 'required|exists:categories,id',
             'tags' => 'nullable|string',
             'preview_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:2048'],
-            'file_path' => ['nullable', 'file', 'max:120M'],
+            'file_path' => ['nullable', 'file', 'max:120000'],
         ]);
 
         $model->update([
@@ -133,6 +133,7 @@ class ModelController extends Controller
     {
         $model->enabled = true;
         $model->save();
+
         return redirect()->back()->with('success', 'Model enabled successfully');
     }
 
