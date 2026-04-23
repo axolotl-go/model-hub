@@ -2,6 +2,7 @@
 $userCards = auth()->check() ? auth()->user()->cards()->latest()->get() : collect();
 @endphp
 <x-app-layout>
+    @if($threed->enabled)
     <div class="min-w-screen w-full grid grid-cols-1 lg:grid-cols-12 gap-12 p-4">
 
         {{-- ── Left column ── --}}
@@ -9,7 +10,7 @@ $userCards = auth()->check() ? auth()->user()->cards()->latest()->get() : collec
             <header class="space-y-4">
                 <a href="{{ route('landing') }}"
                     class="inline-flex items-center gap-2 text-zinc-500 hover:text-cyan-400 transition-colors text-xs uppercase tracking-widest font-semibold group">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    <svg xmlns="http://www.w3si.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-4 group-hover:-translate-x-1 transition-transform">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                     </svg>
@@ -249,4 +250,15 @@ $userCards = auth()->check() ? auth()->user()->cards()->latest()->get() : collec
             </div>
         </div>
     </div>
+    @else
+    <div class="flex justify-center items-center text-zinc-400 text-center mt-12">
+        <div class="space-y-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <p>Lo sentimos, este modelo no está disponible de momento.</p>
+            <a href="{{ route('landing') }}"
+                class="inline-flex items-center px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-sm rounded-xl transition-all">
+                Ir a la página principal
+            </a>
+        </div>
+    </div>
+    @endif
 </x-app-layout>

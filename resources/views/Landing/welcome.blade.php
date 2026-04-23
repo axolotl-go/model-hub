@@ -1,5 +1,6 @@
 @extends('layouts.landing')
 @section('content')
+<<<<<<< HEAD
     @foreach($threeds as $item)
         @if ($item->enabled)
             <a href="{{ route('models.show', $item) }}" class="block">
@@ -63,4 +64,13 @@
         @endif
 
     @endforeach
+=======
+    @if($threeds->count() == 0)
+        <p class="text-zinc-500 text-sm">No models found</p>
+    @else
+        @foreach($threeds as $model)
+            <x-card-model :item="$model" class="aspect-square" />
+        @endforeach
+    @endif
+>>>>>>> e83aff7e0b1bacf83ff205ef90c52b4c6cc388e6
 @endsection

@@ -66,7 +66,10 @@ class ModelController extends Controller
             'tags' => $request->input('tags'),
             'preview_image' => $previewImage,
             'user_id' => auth()->id(),
+<<<<<<< HEAD
             'enabled'=> false,
+=======
+>>>>>>> e83aff7e0b1bacf83ff205ef90c52b4c6cc388e6
         ]);
 
         return redirect()->route('admin.models.index')->with('success', 'Model created successfully');
