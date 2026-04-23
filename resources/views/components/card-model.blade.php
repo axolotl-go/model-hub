@@ -1,7 +1,7 @@
 <div {{ $attributes->merge(['class' => 'group relative bg-black rounded-2xl overflow-hidden transition-all duration-300 hover:bg-[#25252a] w-full h-full']) }}>
 
     <div class="w-full h-full">
-        <a href="{{ route('models.show', $item) }}" class="block w-full h-full">
+        <a href="{{ $item ? route('models.show', $item) : '#' }}" class="block w-full h-full">
             <x-three-d-view :model="$item" />
             {{-- Overlay con info --}}
             <div

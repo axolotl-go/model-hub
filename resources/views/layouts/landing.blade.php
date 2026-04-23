@@ -14,7 +14,6 @@
     <!-- Styles / Scripts -->
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @else
     @endif
 </head>
 
@@ -84,7 +83,9 @@
                 </div>
 
                 <div class="lg:col-span-7 h-[400px] rounded-2xl overflow-hidden relative group">
-                    <x-card-model :item="$featured" />
+                    @if($featured)
+                        <x-card-model :item="$featured" />
+                    @endif
                 </div>
     </div>
     </header>
@@ -100,7 +101,7 @@
             {{-- Botones de categoría --}}
             @foreach($categories as $category)
                     <a href="{{ route('landing', ['category' => $category->id]) }}" class="px-6 py-2 rounded-lg font-bold text-sm transition-colors
-                                                                                                                                                                                      {{ isset($activeCategory) && $activeCategory == $category->id
+                                                {{ isset($activeCategory) && $activeCategory == $category->id
                 ? 'bg-[#7000ff] text-white'
                 : 'text-zinc-500 hover:text-zinc-200' }}">
                         {{ $category->name }}
@@ -108,14 +109,12 @@
             @endforeach
         </div>
         {{-- Contador de resultados --}}
-        @isset($activeCategory)
-            @if($activeCategory)
-                <p class="text-zinc-500 text-sm">
-                    Mostrando <span class="text-white font-bold">{{ $threeds->count() }}</span>
-                    modelos
-                </p>
-            @endif
-        @endisset
+        @if(isset($activeCategory))
+            <p class="text-zinc-500 text-sm">
+                Mostrando <span class="text-white font-bold">{{ $threeds->count() }}</span>
+                modelos
+            </p>
+        @endif
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         @yield('content')
