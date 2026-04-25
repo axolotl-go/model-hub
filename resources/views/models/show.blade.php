@@ -52,9 +52,12 @@ $userCards = auth()->check() ? auth()->user()->cards()->latest()->get() : collec
                     class="mb-6 bg-zinc-900 p-4 rounded-xl border border-zinc-800/60">
                     @csrf
                     <div class="space-y-3">
-                        <textarea name="comment" placeholder="Share your thoughts..."
+                        <textarea name="comment" placeholder="Share your thoughts (min. 3 characters)..."
                             class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
                             rows="3"></textarea>
+                        @error('comment')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
                         <button type="submit"
                             class="bg-cyan-500 hover:bg-cyan-600 text-black px-4 py-2 rounded-lg font-bold text-xs transition-all">
                             Post Comment

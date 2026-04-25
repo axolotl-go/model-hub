@@ -101,7 +101,7 @@
             {{-- Botones de categoría --}}
             @foreach($categories as $category)
                     <a href="{{ route('landing', ['category' => $category->id]) }}" class="px-6 py-2 rounded-lg font-bold text-sm transition-colors
-                                                {{ isset($activeCategory) && $activeCategory == $category->id
+                                                                        {{ isset($activeCategory) && $activeCategory == $category->id
                 ? 'bg-[#7000ff] text-white'
                 : 'text-zinc-500 hover:text-zinc-200' }}">
                         {{ $category->name }}
@@ -116,7 +116,7 @@
             </p>
         @endif
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6">
         @yield('content')
     </div>
     </main>

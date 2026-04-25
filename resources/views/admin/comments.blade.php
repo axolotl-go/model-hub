@@ -55,7 +55,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-zinc-800/40">
-                                        @foreach($comments as $comment)
+                                        @foreach($model->comments as $comment)
                                                             <tr class="hover:bg-zinc-800/40 transition-colors group">
                                                                 <td class="px-6 py-4">
                                                                     <div
@@ -77,7 +77,7 @@
                                                                 </td>
                                                                 <td class="px-6 py-4">
                                                                     <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold
-{{ $comment->user->role === 'admin'
+                                            {{ $comment->user->role === 'admin'
                                             ? 'bg-red-500/10 text-red-400 border border-red-500/20'
                                             : 'bg-blue-500/10 text-blue-400 border border-blue-500/20' }}">
                                                                         {{ ucfirst($comment->user->role) }}
