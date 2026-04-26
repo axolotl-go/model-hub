@@ -68,9 +68,11 @@
                     <div class="space-y-6">
                         <div>
                             <label class="block text-sm font-bold text-white mb-2">Preview Image</label>
-                            @if($model->preview_image)
-                                <img src="{{ $model->preview_image }}" alt="{{ $model->name }}"
-                                    class="w-full h-48 object-cover rounded-lg border border-zinc-800 mb-4">
+                            @if($model->file_path)
+                                <x-three-d-view :model="$model" />
+                            @elseif($model->preview_image)
+                                <img src="{{ Storage::url($model->preview_image) }}"
+                                    class="w-full h-48 object-cover rounded-lg mb-2" />
                             @endif
                             <input type="file" name="preview_image" accept="image/*"
                                 class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500">

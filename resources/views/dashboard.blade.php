@@ -82,7 +82,7 @@
                 <div class="space-y-4">
                     <h3 class="font-bold text-white text-lg">Quick Actions</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <a href="{{ route('models.index') }}"
+                        <a href="{{ route('landing') }}"
                             class="bg-zinc-900 border border-zinc-800/60 hover:border-cyan-500 rounded-xl p-6 transition-all duration-200 group">
                             <div class="flex items-center gap-4">
                                 <div

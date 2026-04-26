@@ -75,7 +75,7 @@ class ModelController extends Controller
     {
         $categories = Category::all();
 
-        return view('admin.models-edit', ['model' => $model, 'categories' => $categories]);
+        return view('admin.models-edit', compact('model', 'categories'));
     }
 
     public function update(Request $request, Threed $model)
